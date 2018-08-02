@@ -1,0 +1,164 @@
+[32mLaravel development server started:[39m <http://127.0.0.1:8000>
+[Wed Aug  1 14:45:23 2018] 127.0.0.1:9775 [200]: /favicon.ico
+[Wed Aug  1 14:47:48 2018] 127.0.0.1:9776 Invalid request (Unexpected EOF)
+[32mLaravel development server started:[39m <http://127.0.0.1:8000>
+[Wed Aug  1 17:53:55 2018] 127.0.0.1:12807 [200]: /favicon.ico
+[Wed Aug  1 17:53:58 2018] 127.0.0.1:12809 [200]: /favicon.ico
+[Wed Aug  1 17:54:17 2018] 127.0.0.1:12810 Invalid request (Unexpected EOF)
+[Wed Aug  1 17:54:17 2018] 127.0.0.1:12811 Invalid request (Unexpected EOF)
+[Wed Aug  1 17:54:17 2018] 127.0.0.1:12819 Invalid request (Unexpected EOF)
+[Wed Aug  1 17:54:20 2018] 127.0.0.1:12857 [200]: /favicon.ico
+[Wed Aug  1 17:55:26 2018] 127.0.0.1:12858 Invalid request (Unexpected EOF)
+[Wed Aug  1 17:55:26 2018] 127.0.0.1:12859 Invalid request (Unexpected EOF)
+[Wed Aug  1 17:55:35 2018] 127.0.0.1:12982 [200]: /favicon.ico
+[Wed Aug  1 17:56:13 2018] 127.0.0.1:12983 Invalid request (Unexpected EOF)
+[Wed Aug  1 17:56:13 2018] 127.0.0.1:12984 Invalid request (Unexpected EOF)
+[Wed Aug  1 17:56:16 2018] 127.0.0.1:13046 [200]: /favicon.ico
+[Wed Aug  1 17:56:26 2018] 127.0.0.1:13047 Invalid request (Unexpected EOF)
+[Wed Aug  1 17:56:27 2018] 127.0.0.1:13071 [200]: /js/app.js
+[Wed Aug  1 17:56:28 2018] 127.0.0.1:13072 [200]: /css/app.css
+[Wed Aug  1 17:56:28 2018] 127.0.0.1:13082 [200]: /favicon.ico
+[Wed Aug  1 18:00:57 2018] 127.0.0.1:13506 [200]: /js/app.js
+[Wed Aug  1 18:00:57 2018] 127.0.0.1:13507 [200]: /css/app.css
+[Wed Aug  1 18:00:58 2018] 127.0.0.1:13508 [200]: /favicon.ico
+[Wed Aug  1 18:01:48 2018] 127.0.0.1:13653 [200]: /js/app.js
+[Wed Aug  1 18:01:48 2018] 127.0.0.1:13654 [200]: /css/app.css
+[Wed Aug  1 18:01:48 2018] 127.0.0.1:13655 [200]: /favicon.ico
+[Wed Aug  1 18:02:04 2018] 127.0.0.1:13690 [200]: /js/app.js
+[Wed Aug  1 18:02:04 2018] 127.0.0.1:13691 [200]: /css/app.css
+[Wed Aug  1 18:02:04 2018] 127.0.0.1:13692 [200]: /favicon.ico
+[Wed Aug  1 18:02:28 2018] 127.0.0.1:13731 [200]: /js/app.js
+[Wed Aug  1 18:02:28 2018] 127.0.0.1:13732 [200]: /css/app.css
+[Wed Aug  1 18:02:28 2018] 127.0.0.1:13733 [200]: /favicon.ico
+[Wed Aug  1 18:02:47 2018] 127.0.0.1:13780 [200]: /js/app.js
+[Wed Aug  1 18:02:47 2018] 127.0.0.1:13781 [200]: /css/app.css
+[Wed Aug  1 18:02:47 2018] 127.0.0.1:13782 [200]: /favicon.ico
+[Wed Aug  1 18:03:04 2018] 127.0.0.1:13811 [200]: /js/app.js
+[Wed Aug  1 18:03:04 2018] 127.0.0.1:13812 [200]: /css/app.css
+[Wed Aug  1 18:03:05 2018] 127.0.0.1:13813 [200]: /favicon.ico
+[Wed Aug  1 18:04:27 2018] 127.0.0.1:13944 [200]: /js/app.js
+[Wed Aug  1 18:04:27 2018] 127.0.0.1:13945 [200]: /css/app.css
+[Wed Aug  1 18:04:27 2018] 127.0.0.1:13946 [200]: /favicon.ico
+[Wed Aug  1 18:04:40 2018] 127.0.0.1:13975 [200]: /js/app.js
+[Wed Aug  1 18:04:40 2018] 127.0.0.1:13976 [200]: /css/app.css
+[Wed Aug  1 18:04:41 2018] 127.0.0.1:13977 [200]: /favicon.ico
+[Wed Aug  1 18:28:21 2018] 127.0.0.1:2394 [200]: /favicon.ico
+[Wed Aug  1 18:28:21 2018] 127.0.0.1:2395 Invalid request (Unexpected EOF)
+[Wed Aug  1 18:28:21 2018] 127.0.0.1:2396 Invalid request (Unexpected EOF)
+[Wed Aug  1 18:28:28 2018] 127.0.0.1:2411 [200]: /js/app.js
+[Wed Aug  1 18:28:29 2018] 127.0.0.1:2412 [200]: /css/app.css
+[Wed Aug  1 18:28:29 2018] 127.0.0.1:2420 [200]: /favicon.ico
+[Wed Aug  1 18:28:55 2018] 127.0.0.1:2462 [200]: /js/app.js
+[Wed Aug  1 18:28:55 2018] 127.0.0.1:2463 [200]: /css/app.css
+[Wed Aug  1 18:28:55 2018] 127.0.0.1:2464 [200]: /favicon.ico
+[Wed Aug  1 18:39:00 2018] 127.0.0.1:3568 [200]: /js/app.js
+[Wed Aug  1 18:39:00 2018] 127.0.0.1:3569 [200]: /css/app.css
+[Wed Aug  1 18:39:01 2018] 127.0.0.1:3570 [200]: /favicon.ico
+[Wed Aug  1 18:39:46 2018] 127.0.0.1:3708 [200]: /js/app.js
+[Wed Aug  1 18:39:47 2018] 127.0.0.1:3709 [200]: /css/app.css
+[Wed Aug  1 18:39:56 2018] 127.0.0.1:3710 Invalid request (Unexpected EOF)
+[Wed Aug  1 18:40:06 2018] 127.0.0.1:3745 [200]: /js/app.js
+[Wed Aug  1 18:40:06 2018] 127.0.0.1:3746 [200]: /css/app.css
+[Wed Aug  1 18:40:15 2018] 127.0.0.1:3747 Invalid request (Unexpected EOF)
+[Wed Aug  1 18:44:14 2018] 127.0.0.1:4182 [200]: /js/app.js
+[Wed Aug  1 18:44:14 2018] 127.0.0.1:4183 [200]: /css/app.css
+[Wed Aug  1 18:44:29 2018] 127.0.0.1:4184 Invalid request (Unexpected EOF)
+[Wed Aug  1 18:44:31 2018] 127.0.0.1:4213 [200]: /js/app.js
+[Wed Aug  1 18:44:31 2018] 127.0.0.1:4214 [200]: /css/app.css
+[Wed Aug  1 18:44:48 2018] 127.0.0.1:4232 Invalid request (Unexpected EOF)
+[Wed Aug  1 18:44:48 2018] 127.0.0.1:4233 Invalid request (Unexpected EOF)
+[Wed Aug  1 18:44:49 2018] 127.0.0.1:4264 [200]: /js/app.js
+[Wed Aug  1 18:44:50 2018] 127.0.0.1:4265 [200]: /css/app.css
+[Wed Aug  1 18:44:57 2018] 127.0.0.1:4285 [200]: /css/app.css
+[Wed Aug  1 18:44:57 2018] 127.0.0.1:4274 [200]: /js/app.js
+[Wed Aug  1 18:45:10 2018] 127.0.0.1:4309 [200]: /js/app.js
+[Wed Aug  1 18:45:10 2018] 127.0.0.1:4310 [200]: /css/app.css
+[Wed Aug  1 18:45:13 2018] 127.0.0.1:4320 [200]: /js/app.js
+[Wed Aug  1 18:45:14 2018] 127.0.0.1:4321 [200]: /css/app.css
+[Wed Aug  1 18:45:20 2018] 127.0.0.1:4338 [200]: /js/app.js
+[Wed Aug  1 18:45:20 2018] 127.0.0.1:4339 [200]: /css/app.css
+[Wed Aug  1 18:47:03 2018] 127.0.0.1:4513 [200]: /js/app.js
+[Wed Aug  1 18:47:04 2018] 127.0.0.1:4514 [200]: /css/app.css
+[Wed Aug  1 18:49:03 2018] 127.0.0.1:4695 [200]: /js/app.js
+[Wed Aug  1 18:49:03 2018] 127.0.0.1:4696 [200]: /css/app.css
+[Wed Aug  1 18:51:54 2018] 127.0.0.1:4939 [200]: /favicon.ico
+[Wed Aug  1 18:52:10 2018] 127.0.0.1:4940 Invalid request (Unexpected EOF)
+[Wed Aug  1 18:52:12 2018] 127.0.0.1:4974 [200]: /favicon.ico
+[Wed Aug  1 18:53:10 2018] 127.0.0.1:4975 Invalid request (Unexpected EOF)
+[Wed Aug  1 18:53:11 2018] 127.0.0.1:5070 [200]: /js/app.js
+[Wed Aug  1 18:53:11 2018] 127.0.0.1:5071 [200]: /css/app.css
+[Wed Aug  1 18:53:12 2018] 127.0.0.1:5079 [200]: /favicon.ico
+[Wed Aug  1 18:54:15 2018] 127.0.0.1:5169 [200]: /js/app.js
+[Wed Aug  1 18:54:15 2018] 127.0.0.1:5172 [200]: /css/app.css
+[Wed Aug  1 18:54:16 2018] 127.0.0.1:5180 [200]: /favicon.ico
+[Wed Aug  1 18:56:13 2018] 127.0.0.1:5387 [200]: /js/app.js
+[Wed Aug  1 18:56:13 2018] 127.0.0.1:5388 [200]: /css/app.css
+[Wed Aug  1 18:56:25 2018] 127.0.0.1:5389 Invalid request (Unexpected EOF)
+[Wed Aug  1 18:56:26 2018] 127.0.0.1:5414 [200]: /js/app.js
+[Wed Aug  1 18:56:27 2018] 127.0.0.1:5415 [200]: /css/app.css
+[Wed Aug  1 18:56:27 2018] 127.0.0.1:5416 [200]: /favicon.ico
+[Wed Aug  1 18:57:01 2018] 127.0.0.1:5475 [200]: /favicon.ico
+[Wed Aug  1 18:57:40 2018] 127.0.0.1:5476 Invalid request (Unexpected EOF)
+[Wed Aug  1 18:57:40 2018] 127.0.0.1:5477 Invalid request (Unexpected EOF)
+[Wed Aug  1 18:58:54 2018] 127.0.0.1:5622 Invalid request (Unexpected EOF)
+[Wed Aug  1 18:58:54 2018] 127.0.0.1:5623 Invalid request (Unexpected EOF)
+[Wed Aug  1 18:59:55 2018] 127.0.0.1:5776 [200]: /favicon.ico
+[Wed Aug  1 19:00:07 2018] 127.0.0.1:5777 Invalid request (Unexpected EOF)
+[Wed Aug  1 19:00:09 2018] 127.0.0.1:5804 [200]: /js/app.js
+[Wed Aug  1 19:00:09 2018] 127.0.0.1:5805 [200]: /css/app.css
+[Wed Aug  1 19:00:09 2018] 127.0.0.1:5813 [200]: /favicon.ico
+[Wed Aug  1 19:00:58 2018] 127.0.0.1:5894 [200]: /js/app.js
+[Wed Aug  1 19:00:59 2018] 127.0.0.1:5895 [200]: /css/app.css
+[Wed Aug  1 19:00:59 2018] 127.0.0.1:5903 [200]: /favicon.ico
+[Wed Aug  1 19:01:23 2018] 127.0.0.1:5939 [200]: /js/app.js
+[Wed Aug  1 19:01:23 2018] 127.0.0.1:5940 [200]: /css/app.css
+[Wed Aug  1 19:01:23 2018] 127.0.0.1:5941 [200]: /favicon.ico
+[Wed Aug  1 19:01:35 2018] 127.0.0.1:5965 [200]: /favicon.ico
+[Wed Aug  1 19:01:43 2018] 127.0.0.1:5966 Invalid request (Unexpected EOF)
+[Wed Aug  1 19:01:43 2018] 127.0.0.1:5967 Invalid request (Unexpected EOF)
+[Wed Aug  1 19:03:31 2018] 127.0.0.1:6148 [200]: /js/app.js
+[Wed Aug  1 19:03:31 2018] 127.0.0.1:6149 [200]: /css/app.css
+[Wed Aug  1 19:03:31 2018] 127.0.0.1:6157 [200]: /favicon.ico
+[Wed Aug  1 19:04:00 2018] 127.0.0.1:6203 [200]: /js/app.js
+[Wed Aug  1 19:04:01 2018] 127.0.0.1:6204 [200]: /css/app.css
+[Wed Aug  1 19:04:01 2018] 127.0.0.1:6205 [200]: /favicon.ico
+[Wed Aug  1 19:04:25 2018] 127.0.0.1:6245 [200]: /favicon.ico
+[Wed Aug  1 19:04:48 2018] 127.0.0.1:6246 Invalid request (Unexpected EOF)
+[Wed Aug  1 19:04:48 2018] 127.0.0.1:6247 Invalid request (Unexpected EOF)
+[Wed Aug  1 19:04:51 2018] 127.0.0.1:6294 [200]: /favicon.ico
+[Wed Aug  1 19:05:09 2018] 127.0.0.1:6295 Invalid request (Unexpected EOF)
+[Wed Aug  1 19:05:09 2018] 127.0.0.1:6296 Invalid request (Unexpected EOF)
+[Wed Aug  1 19:07:56 2018] 127.0.0.1:6610 Invalid request (Unexpected EOF)
+[Wed Aug  1 19:07:56 2018] 127.0.0.1:6611 Invalid request (Unexpected EOF)
+[Wed Aug  1 19:07:57 2018] 127.0.0.1:6633 [200]: /js/app.js
+[Wed Aug  1 19:07:58 2018] 127.0.0.1:6634 [200]: /css/app.css
+[Wed Aug  1 19:07:58 2018] 127.0.0.1:6642 [200]: /favicon.ico
+[Wed Aug  1 19:08:18 2018] 127.0.0.1:6672 [200]: /js/app.js
+[Wed Aug  1 19:08:18 2018] 127.0.0.1:6673 [200]: /css/app.css
+[Wed Aug  1 19:14:32 2018] 127.0.0.1:7274 [200]: /js/app.js
+[Wed Aug  1 19:14:32 2018] 127.0.0.1:7275 [200]: /css/app.css
+[Wed Aug  1 19:14:32 2018] 127.0.0.1:7285 [200]: /favicon.ico
+[Wed Aug  1 19:14:44 2018] 127.0.0.1:7304 [200]: /favicon.ico
+[Wed Aug  1 19:15:10 2018] 127.0.0.1:7305 Invalid request (Unexpected EOF)
+[Wed Aug  1 19:15:10 2018] 127.0.0.1:7306 Invalid request (Unexpected EOF)
+[Wed Aug  1 19:15:13 2018] 127.0.0.1:7357 [200]: /favicon.ico
+[Wed Aug  1 19:15:26 2018] 127.0.0.1:7359 Invalid request (Unexpected EOF)
+[Wed Aug  1 19:16:53 2018] 127.0.0.1:7525 [200]: /favicon.ico
+[Wed Aug  1 19:18:21 2018] 127.0.0.1:7526 Invalid request (Unexpected EOF)
+[Wed Aug  1 19:18:25 2018] 127.0.0.1:7670 [200]: /favicon.ico
+[Wed Aug  1 19:18:59 2018] 127.0.0.1:7671 Invalid request (Unexpected EOF)
+[Wed Aug  1 19:19:09 2018] 127.0.0.1:7727 Invalid request (Unexpected EOF)
+[Wed Aug  1 19:19:09 2018] 127.0.0.1:7728 Invalid request (Unexpected EOF)
+[Wed Aug  1 19:19:11 2018] 127.0.0.1:7750 [200]: /favicon.ico
+[Wed Aug  1 19:20:28 2018] 127.0.0.1:7881 [200]: /css/app.css
+[Wed Aug  1 19:20:28 2018] 127.0.0.1:7875 [200]: /js/app.js
+[Wed Aug  1 19:20:28 2018] 127.0.0.1:7886 [200]: /favicon.ico
+[Wed Aug  1 19:20:48 2018] 127.0.0.1:7917 [200]: /js/app.js
+[Wed Aug  1 19:20:48 2018] 127.0.0.1:7918 [200]: /css/app.css
+[Wed Aug  1 19:20:49 2018] 127.0.0.1:7926 [200]: /favicon.ico
+[Wed Aug  1 19:20:57 2018] 127.0.0.1:7940 [200]: /js/app.js
+[Wed Aug  1 19:20:57 2018] 127.0.0.1:7941 [200]: /css/app.css
+[Wed Aug  1 19:20:57 2018] 127.0.0.1:7942 [200]: /favicon.ico
+[Thu Aug  2 09:56:25 2018] 127.0.0.1:5349 Invalid request (Unexpected EOF)
+[Thu Aug  2 09:56:25 2018] 127.0.0.1:5350 Invalid request (Unexpected EOF)
+[Thu Aug  2 09:56:25 2018] 127.0.0.1:5351 Invalid request (Unexpected EOF)
