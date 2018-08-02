@@ -6,7 +6,10 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    {{$thread->owner->name}} posted:
+                    <a href="">
+                        {{$thread->owner->name}}
+                    </a> 
+                    posted:
                     {{$thread->title}}
                 </div>
                 <div class="card-body">
