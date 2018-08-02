@@ -10,13 +10,13 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class ParticipateInForumTest extends TestCase
 {
     use DatabaseMigrations;
-
+    
     /** @test */
     function a_visitor_can_not_participate_in_forum_threads()
     {
         $this->expectException('Illuminate\Auth\AuthenticationException');
-
-        $thread = factory('App\Thread')->create();
+        
+        $thread = create('App\Thread');
 
         $this->post($thread->path('/replies'), []);
     }
@@ -24,11 +24,12 @@ class ParticipateInForumTest extends TestCase
     /** @test */
     function a_user_can_participate_in_forum_threads()
     {
-        $this->be($user = factory('App\User')->create());
+        // $this->be($user = create('App\User'));
+        $this->signIn();
 
-        $thread = factory('App\Thread')->create();
+        $thread = create('App\Thread');
 
-        $reply = factory('App\Reply')->make();
+        $reply = make('App\Reply');
 
         $this->post($thread->path('/replies'), $reply->toArray());
 
