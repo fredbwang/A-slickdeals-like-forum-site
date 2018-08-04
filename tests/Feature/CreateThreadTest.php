@@ -14,20 +14,17 @@ class CreateThreadTest extends TestCase
     /** @test */
     public function a_visitor_can_not_see_create_thread_page()
     {
-        $this->withExceptionHandling()
-            ->get('/threads/create')
-            ->assertRedirect('login');
+        $this->expectException('Illuminate\Auth\AuthenticationException');
+        $this->get('/threads/create');
     }
 
     /** @test */
     public function a_visitor_can_not_create_a_thread()
     {
-        $this->expectException('Illuminate\Auth\AuthenticationException');
-
         $thread = make('App\Thread'); // raw create an array and make create model
 
+        $this->expectException('Illuminate\Auth\AuthenticationException');
         $this->post('/threads', $thread->toArray());
-
     }
 
     /** @test */
@@ -35,12 +32,50 @@ class CreateThreadTest extends TestCase
     {
         $this->signIn();
 
-        $thread = make('App\Thread'); // raw create an array and make create model
+        $thread = raw('App\Thread');
 
-        $this->post('/threads', $thread->toArray());
+        $response = $this->post('/threads', $thread);
 
-        $this->get($thread->path())
-            ->assertSee($thread->title)
-            ->assertSee($thread->body);
+        $this->get($response->headers->get('Location'))
+            ->assertSee($thread['title'])
+            ->assertSee($thread['body']);
     }
+
+    /** @test */
+    public function a_thread_requires_a_title()
+    {
+        $this->postThread(['title' => null])
+            ->assertSessionHasErrors('title');
+
+    }
+
+    /** @test */
+    public function a_thread_requires_a_body()
+    {
+        $this->postThread(['body' => null])
+            ->assertSessionHasErrors('body');
+
+    }
+
+    /** @test */
+    public function a_thread_requires_a_valid_channel()
+    {
+        factory('App\Channel', 3)->create();
+        $this->postThread(['channel_id' => null])
+            ->assertSessionHasErrors('channel_id');
+
+            $this->postThread(['channel_id' => 999])
+            ->assertSessionHasErrors('channel_id');
+
+    }
+
+    public function postThread($overrides = [])
+    {
+        $this->withExceptionHandling()->signIn();
+
+        $thread = raw('App\Thread', $overrides);
+
+        return $this->post('/threads', $thread);
+    }
+
 }

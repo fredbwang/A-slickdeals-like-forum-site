@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Thread;
+use App\Channel;
 use Illuminate\Http\Request;
+use App\Filters\ThreadFilter;
+use Illuminate\Foundation\Console\Presets\React;
 
 class ThreadController extends Controller
 {
 
-    public function __construct() {
-         $this->middleware('auth')->except(['index', 'show']);
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
     }
 
     /**
@@ -17,10 +21,18 @@ class ThreadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($channelSlug = null, Request $request)
     {
-        $threads = Thread::latest()->get();
-        return view('threads.index', compact('threads'));
+        if ($channelSlug) {
+            $channel = Channel::where('slug', $channelSlug)->first();
+            $threads = $channel->threads()->latest();
+        } else {
+            $threads = Thread::latest();
+        }
+
+        $threads = $threads->filterWith(new ThreadFilter($request))->get();
+
+        return view('threads.index', compact('threads', isset($channel) ? 'channel' : null));
     }
 
     /**
@@ -41,8 +53,15 @@ class ThreadController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required',
+            'channel_id' => 'required|exists:channels,id'
+        ]);
+
         $thread = Thread::create([
             'user_id' => auth()->id(),
+            'channel_id' => request('channel_id'),
             'title' => request('title'),
             'body' => request('body')
         ]);
@@ -52,13 +71,16 @@ class ThreadController extends Controller
 
     /**
      * Display the specified resource.
-     *
+     * @param int $channelId
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show(Thread $thread)
+    public function show($channelSlug, Thread $thread)
     {
-        return view('threads.show', compact('thread'));
+        return view('threads.show', [
+            'thread' => $thread,
+            'replies' => $thread->replies()->paginate(3)
+        ]);
     }
 
     /**

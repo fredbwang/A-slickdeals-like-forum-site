@@ -3,14 +3,24 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Thread extends Model
 {
     protected $guarded = [];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('replyCount', function ($builder) {
+            $builder->withCount('replies');
+        });
+    }
+
     public function path($suffix = null)
     {
-        return '/threads/' . $this->id . $suffix;
+        return "/threads/{$this->channel->slug}/{$this->id}{$suffix}";
     }
 
     public function replies()
@@ -23,7 +33,18 @@ class Thread extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function addReply($reply) {
+    public function channel()
+    {
+        return $this->belongsTo(Channel::class, 'channel_id');
+    }
+
+    public function addReply($reply)
+    {
         $this->replies()->create($reply);
+    }
+
+    public function scopeFilterWith($query, $filters)
+    {
+        return $filters->apply($query);
     }
 }
