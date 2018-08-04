@@ -38,4 +38,66 @@ class ReadThreadTest extends TestCase
         $this->get($this->thread->path())
             ->assertSee($reply->body);
     }
+
+    /** @test */
+    public function a_user_can_filter_threads_by_channel()
+    {
+        $channel = create('App\Channel');
+        $threadWithInChannel = create('App\Thread', ['channel_id' => $channel->id]);
+        $threadOutOfChannel = create('App\Thread');
+
+        $this->get('threads/' . $channel->slug)
+            ->assertSee($threadWithInChannel->title)
+            ->assertDontSee($threadOutOfChannel->title);
+    }
+
+    /** @test */
+    public function a_user_can_filter_by_channel_and_see_channel_name()
+    {
+        $channel = create('App\Channel');
+
+        $this->get('threads/' . $channel->slug)
+            ->assertSee($channel->name);
+    }
+
+    /** @test */
+    public function a_user_can_filter_threads_by_username()
+    {
+        $this->signIn();
+
+        $myThread = create('App\Thread', ['user_id' => auth()->id()]);
+        $otherThread = create('App\Thread');
+
+        $this->get('/threads?createBy=' . auth()->user()->name)
+            ->assertSee($myThread->title)
+            ->assertDontSee($otherThread->title);
+    }
+
+    /** @test */
+    public function a_user_can_filter_threads_by_username_and_channel()
+    {
+        $this->signIn();
+
+        $user = create('App\User');
+        $channel = create('App\Channel');
+
+        $myThreadWithInChannel = create('App\Thread', ['user_id' => auth()->id(), 'channel_id' => $channel->id]);
+        $myThreadOutOfChannel = create('App\Thread', ['user_id' => auth()->id()]);
+        $otherThreadwithInChannel = create('App\Thread', ['channel_id' => $channel->id]);
+        $otherThreadOutOfChannel = create('App\Thread');
+        
+        $this->get('threads/' . $channel->slug . '?createBy=' . auth()->user()->name)
+            ->assertSee($myThreadWithInChannel->title)
+            ->assertDontSee($myThreadOutOfChannel->title)
+            ->assertDontSee($otherThreadwithInChannel->title)
+            ->assertDontSee($otherThreadOutOfChannel->title);
+    }
+
+    /** @test */
+    public function a_user_can_filter_threads_by_popularity()
+    {
+        
+    }
+    
+
 }

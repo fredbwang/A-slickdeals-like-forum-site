@@ -1,5 +1,5 @@
 <div class="card-header">
-    <a href="">
+    <a class="card-link" href="">
         {{$reply->owner->name}}
     </a> said
     {{$reply->created_at->diffForHumans()}} :

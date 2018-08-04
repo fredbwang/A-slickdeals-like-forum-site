@@ -12,8 +12,18 @@ class ReplyController extends Controller
         $this->middleware('auth');
     }
 
-    public function store(Thread $thread)
+    /**
+     * Persist a new Reply
+     *
+     * @param int $channelId
+     * @param App\Thread $thread
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store($channelId, Thread $thread, Request $request)
     {
+        $this->validate($request, ['body' => 'required']);
+
         $thread->addReply([
             'body' => request('body'),
             'user_id' => auth()->id()
