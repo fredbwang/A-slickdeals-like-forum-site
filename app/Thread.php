@@ -38,6 +38,24 @@ class Thread extends Model
         return $this->belongsTo(Channel::class, 'channel_id');
     }
 
+    public function votes()
+    {
+        return $this->morphMany(Vote::class, 'voted');
+    }
+
+    /**
+     * vote
+     * vote up or down this thread (aka deal) with a score
+     * @param int $score
+     * @return void
+     */
+    public function vote(int $score)
+    {
+        if (!$this->votes()->where(['user_id' => auth()->id()])->exists()) {
+            $this->votes()->create(['user_id' => auth()->id(), 'score' => $score]);
+        }
+    }
+
     public function addReply($reply)
     {
         $this->replies()->create($reply);

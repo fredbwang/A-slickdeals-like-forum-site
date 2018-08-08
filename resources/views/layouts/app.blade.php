@@ -15,6 +15,7 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
@@ -25,8 +26,8 @@
         <nav class="navbar navbar-expand-md navbar-dark bg-dark navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{-- Laravel --}}
-                    <img style="height:50px" x-enc="src" src="https://c-8oqtgrjgwu46x24uvcvkex2eunkemfgcnuefpx2eeqo.g00.slickdeals.net/g07/3_c-8unkemfgcnu.pgv_/c-8OQTGRJGWU46x24jvvrux3ax2fx2fuvcvke.unkemfgcnuefp.eqox2fkocigux2fjgcfgtx2funkemfgcnuNqiq.rpix3f8415x26k32e.octmx3dkocig_$/$/$/$">
+                    Laravel
+                    {{-- <img style="height:50px" x-enc="src" src="https://c-8oqtgrjgwu46x24uvcvkex2eunkemfgcnuefpx2eeqo.g00.slickdeals.net/g07/3_c-8unkemfgcnu.pgv_/c-8OQTGRJGWU46x24jvvrux3ax2fx2fuvcvke.unkemfgcnuefp.eqox2fkocigux2fjgcfgtx2funkemfgcnuNqiq.rpix3f8415x26k32e.octmx3dkocig_$/$/$/$"> --}}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -47,6 +48,9 @@
                                     <a class="dropdown-item" href="/threads/{{$channel->slug}}">{{$channel->name}}</a>     
                                 @endforeach
                             </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="/threads/?popular=1" class="nav-link">Hot Deals</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/threads/create">Post a Deal</a>

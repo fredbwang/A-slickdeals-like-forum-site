@@ -25,12 +25,12 @@ class ThreadController extends Controller
     {
         if ($channelSlug) {
             $channel = Channel::where('slug', $channelSlug)->first();
-            $threads = $channel->threads()->latest();
+            $threads = $channel->threads();
         } else {
-            $threads = Thread::latest();
+            $threads = Thread::query();
         }
 
-        $threads = $threads->filterWith(new ThreadFilter($request))->get();
+        $threads = $threads->filterWith(new ThreadFilter($request))->latest()->get();
 
         return view('threads.index', compact('threads', isset($channel) ? 'channel' : null));
     }
@@ -79,7 +79,7 @@ class ThreadController extends Controller
     {
         return view('threads.show', [
             'thread' => $thread,
-            'replies' => $thread->replies()->paginate(3)
+            'replies' => $thread->replies()->paginate(5)
         ]);
     }
 

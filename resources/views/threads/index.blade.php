@@ -16,7 +16,9 @@
                         </div>
                         <div class="card-subtitle mb-1">
                             <strong>
-                                {{ $thread->replies_count }} {{ str_plural('comment', $thread->replies_count) }}
+                                <a href="{{ $thread->path() }}">
+                                    {{ $thread->replies_count }} {{ str_plural('comment', $thread->replies_count) }}
+                                </a>             
                             </strong>
                         </div>
                         <div class="card-text">

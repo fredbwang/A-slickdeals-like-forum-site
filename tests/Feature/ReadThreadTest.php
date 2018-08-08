@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ReadThreadTest extends TestCase
@@ -85,7 +84,7 @@ class ReadThreadTest extends TestCase
         $myThreadOutOfChannel = create('App\Thread', ['user_id' => auth()->id()]);
         $otherThreadwithInChannel = create('App\Thread', ['channel_id' => $channel->id]);
         $otherThreadOutOfChannel = create('App\Thread');
-        
+
         $this->get('threads/' . $channel->slug . '?createBy=' . auth()->user()->name)
             ->assertSee($myThreadWithInChannel->title)
             ->assertDontSee($myThreadOutOfChannel->title)
@@ -96,8 +95,40 @@ class ReadThreadTest extends TestCase
     /** @test */
     public function a_user_can_filter_threads_by_popularity()
     {
-        
-    }
-    
+        $threadWithTwoReplies = create('App\Thread', ['created_at' => now()->addMinutes(2)]);
+        create('App\Reply', ['thread_id' => $threadWithTwoReplies], 2);
 
+        $threadWithThreeReplies = create('App\Thread', ['created_at' => now()->addMinutes(1)]);
+        create('App\Reply', ['thread_id' => $threadWithThreeReplies], 10);
+
+        $threadWithNoReplies = $this->thread;
+
+        $response = $this->get('/threads?popular=1');
+
+        $threadsFromResponse = $response->baseResponse->original->getData()['threads'];
+
+        $this->assertEquals([10, 2, 0], $threadsFromResponse->pluck('replies_count')->toArray());
+    }
+
+    /** @test */
+    public function a_user_can_filter_threads_by_popularity_and_channel()
+    {
+        $channel = create('App\Channel');
+        $threadWithTwoReplies = create('App\Thread', ['created_at' => now()->addMinutes(2), 'channel_id' => $channel->id]);
+        create('App\Reply', ['thread_id' => $threadWithTwoReplies->id], 2);
+
+        $threadWithThreeReplies = create('App\Thread', ['created_at' => now()->addMinutes(1), 'channel_id' => $channel->id]);
+        create('App\Reply', ['thread_id' => $threadWithThreeReplies->id], 10);
+
+        $threadWithNoReplies = create('App\Thread', ['channel_id' => $channel->id]);
+
+        $threadOutOfChannel = $this->thread;
+        create('App\Reply', ['thread_id' => $threadOutOfChannel->id], 3);
+
+        $response = $this->get('/threads/' . $channel->slug . '?popular=1');
+
+        $threadsFromResponse = $response->baseResponse->original->getData()['threads'];
+
+        $this->assertEquals([10, 2, 0], $threadsFromResponse->pluck('replies_count')->toArray());
+    }
 }
