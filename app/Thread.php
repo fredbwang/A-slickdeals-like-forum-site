@@ -2,12 +2,17 @@
 
 namespace App;
 
+use App\Utils\Votable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Thread extends Model
 {
+    use Votable;
+
     protected $guarded = [];
+
+    protected $with = ['owner', 'votes', 'channel'];
 
     public static function boot()
     {
@@ -25,7 +30,19 @@ class Thread extends Model
 
     public function replies()
     {
-        return $this->hasMany(Reply::class);
+        return $this->hasMany(Reply::class)
+            ->withCount([
+                'votes as up_votes_count' => function ($query) {
+                    $query->where('score', 1);
+                },
+                'votes as down_votes_count' => function ($query) {
+                    $query->where('score', -1);
+                },
+                'votes as current_vote' => function ($query) {
+                    $query->where('user_id', auth()->id());
+                }
+            ])
+            ->with('owner');
     }
 
     public function owner()
@@ -36,24 +53,6 @@ class Thread extends Model
     public function channel()
     {
         return $this->belongsTo(Channel::class, 'channel_id');
-    }
-
-    public function votes()
-    {
-        return $this->morphMany(Vote::class, 'voted');
-    }
-
-    /**
-     * vote
-     * vote up or down this thread (aka deal) with a score
-     * @param int $score
-     * @return void
-     */
-    public function vote(int $score)
-    {
-        if (!$this->votes()->where(['user_id' => auth()->id()])->exists()) {
-            $this->votes()->create(['user_id' => auth()->id(), 'score' => $score]);
-        }
     }
 
     public function addReply($reply)

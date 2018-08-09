@@ -10,7 +10,7 @@
             <form action="/replies/{{ $reply->id }}/vote-down" method="post">
                 @csrf
                 <button type="submit" class="btn btn-{{ $reply->isDownVote() ? 'secondary' : 'light' }} btn-sm">
-                    <i class="fa fa-thumbs-down"></i> {{ $reply->downVotesNum() }}
+                    <i class="fa fa-thumbs-down"></i> {{ $reply->down_votes_count }}
                 </button>
             </form>
         </div>
@@ -18,7 +18,7 @@
             <form action="/replies/{{ $reply->id }}/vote-up" method="post">
                 @csrf
                 <button type="submit" class="btn btn-{{ $reply->isUpVote() ? 'primary' : 'light' }} btn-sm">
-                    <i class="fa fa-thumbs-up"></i> {{ $reply->upVotesNum() }}
+                    <i class="fa fa-thumbs-up"></i> {{ $reply->up_votes_count }}
                 </button>
             </form>
         </div>

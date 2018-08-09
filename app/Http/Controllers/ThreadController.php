@@ -21,18 +21,11 @@ class ThreadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($channelSlug = null, Request $request)
+    public function index(Channel $channel, Request $request)
     {
-        if ($channelSlug) {
-            $channel = Channel::where('slug', $channelSlug)->first();
-            $threads = $channel->threads();
-        } else {
-            $threads = Thread::query();
-        }
+        $threads = $this->getThreads($channel, new ThreadFilter($request));
 
-        $threads = $threads->filterWith(new ThreadFilter($request))->latest()->get();
-
-        return view('threads.index', compact('threads', isset($channel) ? 'channel' : null));
+        return view('threads.index', compact('threads', $channel->exists ? 'channel' : null));
     }
 
     /**
@@ -115,5 +108,15 @@ class ThreadController extends Controller
     public function destroy(Thread $thread)
     {
         //
+    }
+
+    public function getThreads(Channel $channel, ThreadFilter $filter)
+    {
+        $threads = Thread::filterWith($filter);
+        if ($channel->exists) {
+            $threads = $threads->where('channel_id', $channel->id);
+        }
+
+        return $threads->latest()->get();
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\View;
 use App\Channel;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,8 +18,11 @@ class AppServiceProvider extends ServiceProvider
     {
         // \View::share('channels', Channel::all());
 
-        \view()->composer('*', function ($view) {
-            $view->with('channels', Channel::all());
+        View::composer('*', function ($view) {
+            $channels = Cache::remember('channels', 60, function() {
+                return Channel::all();
+            });
+            $view->with('channels', $channels);
         });
     }
 
@@ -28,6 +33,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+
     }
 }

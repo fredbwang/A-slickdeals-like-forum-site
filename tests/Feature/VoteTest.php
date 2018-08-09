@@ -51,13 +51,13 @@ class VoteTest extends TestCase
         $this->signIn();
 
         $reply = create('App\Reply');
-        
-        $this->post('/replies/' . $reply->id . '/vote-up');
 
+        $this->post('/replies/' . $reply->id . '/vote-up');
+        $reply->load('votes');
         $this->assertTrue($reply->isUpVote());
 
         $this->post('/replies/' . $reply->id . '/vote-down');
-        
+        $reply->load('votes');
         $this->assertTrue($reply->isDownVote());
     }
 }
