@@ -29,6 +29,8 @@ Route::post('/threads/{channel}/{thread}/replies', 'ReplyController@store');
 Route::get('/threads/{channel}/{thread}', 'ThreadController@show');
 
 Route::post('/replies/{reply}/{action}', 'VoteController@store');
+
+Route::get('/profiles/{user}', 'ProfileController@show');
 // Route::middleware(['auth'])->group(function () {
 // });
 

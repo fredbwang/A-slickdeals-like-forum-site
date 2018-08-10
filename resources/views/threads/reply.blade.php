@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-header">
         <span class="comment-meta">
-            <a class="card-link" href="">
+            <a class="card-link" href="/profiles/{{ $reply->owner->name }}">
                 {{$reply->owner->name}}
             </a> said
             {{$reply->created_at->diffForHumans()}} :
