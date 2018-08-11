@@ -7,9 +7,15 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class CreateThreadTest extends TestCase
+class ManageThreadTest extends TestCase
 {
     use DatabaseMigrations;
+
+    public function setUp()
+    {
+        parent::setup();
+        $this->thread = create('App\Thread');
+    }
 
     /** @test */
     public function a_visitor_can_not_see_create_thread_page()
@@ -42,6 +48,58 @@ class CreateThreadTest extends TestCase
     }
 
     /** @test */
+    public function a_visitor_can_not_delete_threads()
+    {
+        $this->withExceptionHandling();
+
+        $this->delete($this->thread->path())
+            ->assertRedirect('/login');
+    }
+
+    /** @test */
+    public function a_user_can_delete_threads()
+    {
+        $this->signIn();
+
+        $thread = create('App\Thread', ['user_id' => auth()->id()]);
+        $reply = create('App\Reply', ['thread_id' => $thread->id], 2);
+
+        $this->delete($thread->path())->assertStatus(302); // assert redirect
+
+        $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
+        $this->assertDatabaseMissing('replies', ['thread_id' => $thread->id]);
+    }
+
+    /** @test */
+    public function a_user_can_only_delete_its_own_thread()
+    {
+        $this->withExceptionHandling()->signIn();
+
+        $threadOfThisUser = create('App\Thread', ['user_id' => auth()->id()]);
+
+        $this->delete($threadOfThisUser->path())->assertStatus(302);
+        $this->assertDatabaseMissing('threads', ['id' => $threadOfThisUser->id]);
+
+        $threadOfOtherUser = $this->thread;
+
+        $this->delete($threadOfOtherUser->path())->assertStatus(403);
+        $this->assertDatabaseHas('threads', ['id' => $threadOfOtherUser->id]);
+    }
+
+    /** @test */
+    public function a_user_can_only_see_delete_btn_when_authorized()
+    {
+        $this->signIn();
+
+        $thread = create('App\Thread', ['user_id' => auth()->id()]);
+
+        $this->get($thread->path())->assertSee('id="delete-btn"');
+
+        $this->get($this->thread->path())->assertDontSee('id="delete-btn"');
+    }
+    
+
+    /** @test */
     public function a_thread_requires_a_title()
     {
         $this->postThread(['title' => null])
@@ -64,7 +122,7 @@ class CreateThreadTest extends TestCase
         $this->postThread(['channel_id' => null])
             ->assertSessionHasErrors('channel_id');
 
-            $this->postThread(['channel_id' => 999])
+        $this->postThread(['channel_id' => 999])
             ->assertSessionHasErrors('channel_id');
 
     }
@@ -77,5 +135,4 @@ class CreateThreadTest extends TestCase
 
         return $this->post('/threads', $thread);
     }
-
 }

@@ -6,11 +6,23 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <a class="card-link" href="/profiles/{{ $thread->owner->name }}">
-                        {{$thread->owner->name}}
-                    </a> 
-                    posted:
-                    {{$thread->title}}
+                    <span>
+                        <a class="card-link" href="/profiles/{{ $thread->owner->name }}">
+                            {{$thread->owner->name}}
+                        </a> 
+                        posted:
+                        {{$thread->title}}
+                    </span>
+                    
+                    <span class="float-right">
+                        @can('delete', $thread)
+                            <form action="{{ $thread->path() }}" method="POST">
+                                @csrf
+                                {{ method_field('DELETE') }}
+                                <button id="delete-btn" type="submit" class="btn btn-sm btn-secondary">Delete Post</button>
+                            </form>
+                        @endcan
+                    </span>
                 </div>
                 <div class="card-body">
                     {{$thread->body}}
@@ -34,9 +46,9 @@
                     <button class="btn btn-default" type="submit">Submit</button>
                 </form>
             @else
-            <div class="row justify-content-center">
-                <p><a href="{{route('login')}}">Sign in</a> to reply!</p>
-            </div>
+                <div class="row justify-content-center">
+                    <p><a href="{{route('login')}}">Sign in</a> to reply!</p>
+                </div>
             @endif 
         </div>
         

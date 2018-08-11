@@ -68,7 +68,7 @@ class ThreadController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show($channelSlug, Thread $thread)
+    public function show(Channel $channel, Thread $thread)
     {
         return view('threads.show', [
             'thread' => $thread,
@@ -105,9 +105,12 @@ class ThreadController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Thread $thread)
+    public function destroy(Channel $channel, Thread $thread)
     {
-        //
+        $this->authorize('delete', $thread);
+
+        $thread->delete();
+        return redirect('/threads');
     }
 
     public function getThreads(Channel $channel, ThreadFilter $filter)

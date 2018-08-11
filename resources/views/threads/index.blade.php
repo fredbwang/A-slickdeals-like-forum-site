@@ -12,7 +12,7 @@
 
             <hr>
             
-            @foreach ($threads as $key => $thread)
+            @forelse ($threads as $key => $thread)
                 <div class="card">
                     <div class="card-header">
                         <span class="h4">
@@ -31,7 +31,9 @@
                     </div>
                 </div>
                 <br>
-            @endforeach
+            @empty
+                <p>No results</p>
+            @endforelse
         </div>
     </div>
 </div>
