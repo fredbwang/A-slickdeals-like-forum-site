@@ -16,9 +16,11 @@
                         <span>
                             <a class="card-link" href="">
                                 {{$thread->owner->name}}
-                            </a> 
+                            </a>
                             posted:
-                            {{ $thread->title}}
+                             <a href="{{ $thread->path() }}">
+                                {{ $thread->title}}
+                            </a> 
                         </span>
                         <span class="float-right">
                             {{ $thread->created_at->diffForHumans() }}
