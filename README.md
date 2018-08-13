@@ -9,5 +9,6 @@ You are welcomed to try it out and raise issue. Though it is crude and simple.
 Right now 
 1. supports user login, posts, categories, comments.
 2. supports hot deals, personal posts, vote up and down.
+3. supports user profile page, including posted threads and activities.
 
 ### More features are coming!
