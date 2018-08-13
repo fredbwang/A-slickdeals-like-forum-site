@@ -9,12 +9,16 @@ trait RecordActivity
     static function bootRecordActivity()
     {
         if (!auth()->check()) return;
-        
+
         foreach (static::getEventsToRecord() as $event) {
             static::$event(function ($subject) use ($event) {
                 $subject->recordActivity($event);
             });
         }
+
+        static::deleting(function ($subject) {
+            $subject->activity()->delete();
+        });
     }
 
     protected static function getEventsToRecord()

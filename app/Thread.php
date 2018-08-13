@@ -26,7 +26,13 @@ class Thread extends Model
         });
 
         static::deleting(function ($thread) {
-            $thread->replies()->delete();
+            // normal way to delete each reply
+            // $thread->replies->each(function($reply) {
+            //     $reply->delete();
+            // });
+
+            // laravel higher order collection proxy
+            $thread->replies->each->delete();
         });
     }
 

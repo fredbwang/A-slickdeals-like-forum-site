@@ -10,7 +10,7 @@ class Reply extends Model
 {
     use Votable;
     use RecordActivity;
-    
+
     protected $guarded = [];
 
     protected $with = ['owner', 'votes'];
@@ -18,5 +18,10 @@ class Reply extends Model
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function thread()
+    {
+        return $this->belongsTo(Thread::class, 'thread_id');
     }
 }
