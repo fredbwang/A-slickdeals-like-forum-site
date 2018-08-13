@@ -4,10 +4,12 @@ namespace App;
 
 use App\Utils\Votable;
 use Illuminate\Database\Eloquent\Model;
+use App\Utils\RecordActivity;
 
 class Reply extends Model
 {
     use Votable;
+    use RecordActivity;
     
     protected $guarded = [];
 

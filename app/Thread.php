@@ -5,10 +5,13 @@ namespace App;
 use App\Utils\Votable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Utils\RecordActivity;
 
 class Thread extends Model
 {
     use Votable;
+
+    use RecordActivity;
 
     protected $guarded = [];
 
@@ -22,7 +25,7 @@ class Thread extends Model
             $builder->withCount('replies');
         });
 
-        static::deleting(function($thread) {
+        static::deleting(function ($thread) {
             $thread->replies()->delete();
         });
     }
