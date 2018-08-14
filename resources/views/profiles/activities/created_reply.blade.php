@@ -1,11 +1,12 @@
 @component('profiles.activities.activity')
     @slot('heading')
         <span>
+            <i class="fa fa-comment icon-activity pr-2"></i>
             <a class="card-link" href="">
                 {{$activity->owner->name}}
             </a>
-            commented
-            <a href="{{ $activity->subject->thread->path() }}">
+            commented on
+            <a href="{{ $activity->subject->path() }}">
                 {{ $activity->subject->thread->title}}
             </a> 
         </span>

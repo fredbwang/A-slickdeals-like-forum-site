@@ -10,6 +10,7 @@ trait RecordActivity
     {
         if (!auth()->check()) return;
 
+        // dd(static::getEventsToRecord());
         foreach (static::getEventsToRecord() as $event) {
             static::$event(function ($subject) use ($event) {
                 $subject->recordActivity($event);
@@ -33,7 +34,6 @@ trait RecordActivity
 
     protected function recordActivity($event)
     {
-
         $this->activity()->create([
             'user_id' => auth()->id(),
             'type' => $this->getActivityType($event)

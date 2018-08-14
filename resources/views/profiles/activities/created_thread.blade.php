@@ -1,6 +1,7 @@
 @component('profiles.activities.activity')
     @slot('heading')
         <span>
+            <i class="fa fa-pen-alt icon-activity pr-2"></i>
             <a class="card-link" href="">
                 {{$activity->owner->name}}
             </a>

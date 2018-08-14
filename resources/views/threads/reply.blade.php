@@ -1,4 +1,4 @@
-<div class="card">
+<div id="reply-{{ $reply->id }}" class="card">
     <div class="card-header">
         <span class="comment-meta">
             <a class="card-link" href="/profiles/{{ $reply->owner->name }}">

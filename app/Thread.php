@@ -9,9 +9,9 @@ use App\Utils\RecordActivity;
 
 class Thread extends Model
 {
-    use Votable;
-
     use RecordActivity;
+
+    use Votable;
 
     protected $guarded = [];
 

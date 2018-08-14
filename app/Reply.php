@@ -8,8 +8,9 @@ use App\Utils\RecordActivity;
 
 class Reply extends Model
 {
-    use Votable;
     use RecordActivity;
+    
+    use Votable;
 
     protected $guarded = [];
 
@@ -23,5 +24,9 @@ class Reply extends Model
     public function thread()
     {
         return $this->belongsTo(Thread::class, 'thread_id');
+    }
+
+    public function path() {
+        return $this->thread->path() . "#reply-{$this->id}";
     }
 }

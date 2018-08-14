@@ -14,7 +14,9 @@
                 <h5 class="pt-3"> {{ $date }} </h5>
                 <hr>
                 @foreach ($activitiesByDay as $activity)
-                    @include ("profiles.activities.{$activity->type}")
+                    @if (view()->exists("profiles.activities.{$activity->type}"))
+                        @include ("profiles.activities.{$activity->type}")
+                    @endif
                 @endforeach
             @endforeach 
         </div>

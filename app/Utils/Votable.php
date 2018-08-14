@@ -20,7 +20,7 @@ trait Votable
     {
         // using laravel's auto morph fill in
         if ($this->votes()->where(['user_id' => auth()->id()])->exists()) {
-            $this->votes()->where(['user_id' => auth()->id()])->update(['score' => $score]);
+            $this->votes()->where(['user_id' => auth()->id()])->first()->update(['score' => $score]);
         } else {
             $this->votes()->create(['user_id' => auth()->id(), 'score' => $score]);
         }
@@ -45,7 +45,7 @@ trait Votable
 
     public function isUpVote()
     {
-        return !! $this->votes
+        return !!$this->votes
             ->where('user_id', auth()->id())
             ->where('score', 1)
             ->count();
@@ -53,7 +53,7 @@ trait Votable
 
     public function isDownVote()
     {
-        return !! $this->votes
+        return !!$this->votes
             ->where('user_id', auth()->id())
             ->where('score', -1)
             ->count();
