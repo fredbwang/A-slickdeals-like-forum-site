@@ -1,12 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+/*
+|--------------------------------------------------------------------------
+| About
+|--------------------------------------------------------------------------
+| 
+| Author: Borui
+| Time: July 2018
+| Heavily rely on Jeffery Way's work, and special thanks for the genius!
+|
+ */
+
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
+| 
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!

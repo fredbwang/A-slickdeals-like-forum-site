@@ -23,6 +23,7 @@ class Activity extends Model
         return $user
             ->activities()
             ->with('subject')
+            ->with('owner')
             ->take($feedNum)
             ->get()
             ->groupBy(function ($activity) {
