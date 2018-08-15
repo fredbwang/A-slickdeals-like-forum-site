@@ -18,7 +18,7 @@
                         <span class="h4">
                             <a class="card-link" href="{{$thread->path()}}">{{$thread->title}}</a>
                         </span>
-                        <span class="pull-right">
+                        <span class="float-right">
                             <a href="{{ $thread->path() }}" class="badge badge-pill badge-secondary">
                                 {{ $thread->replies_count }} {{ str_plural('comment', $thread->replies_count) }}
                             </a>             
