@@ -9,9 +9,9 @@ use App\Utils\RecordActivity;
 
 class Thread extends Model
 {
-    use Votable;
-
     use RecordActivity;
+
+    use Votable;
 
     protected $guarded = [];
 
@@ -26,7 +26,13 @@ class Thread extends Model
         });
 
         static::deleting(function ($thread) {
-            $thread->replies()->delete();
+            // normal way to delete each reply
+            // $thread->replies->each(function($reply) {
+            //     $reply->delete();
+            // });
+
+            // laravel higher order collection proxy
+            $thread->replies->each->delete();
         });
     }
 
@@ -39,13 +45,13 @@ class Thread extends Model
     {
         return $this->hasMany(Reply::class)
             ->withCount([
-                'votes as up_votes_count' => function ($query) {
+                'votes as upVotesCount' => function ($query) {
                     $query->where('score', 1);
                 },
-                'votes as down_votes_count' => function ($query) {
+                'votes as downVotesCount' => function ($query) {
                     $query->where('score', -1);
                 },
-                'votes as current_vote' => function ($query) {
+                'votes as currentVote' => function ($query) {
                     $query->where('user_id', auth()->id());
                 }
             ])

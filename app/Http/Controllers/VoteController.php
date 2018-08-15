@@ -41,9 +41,13 @@ class VoteController extends Controller
      */
     public function store(Reply $reply, $action)
     {
-        $score = $action == 'vote-up' ? 1 : ($action == 'vote-down' ? -1 : 0);
-        
-        $reply->vote($score);
+        $score = $this->getScore($action);
+
+        $result = $reply->vote($score);
+
+        if (request()->expectsJson()) {
+            return response(['status' => "Vote {$result['action']}d!"]);
+        }
 
         return back();
     }
@@ -90,5 +94,20 @@ class VoteController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    protected function getScore($action)
+    {
+        switch ($action) {
+            case 'vote-up':
+                return 1;
+            case 'vote-down':
+                return -1;
+            case 'cancel-vote':
+                return 0;
+            default:
+                abort(403);
+                return;
+        }
     }
 }

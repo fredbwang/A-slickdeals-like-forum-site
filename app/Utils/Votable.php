@@ -14,15 +14,17 @@ trait Votable
      * vote
      * vote up or down this comment (aka reply) with a score
      * @param int $score
-     * @return void
+     * @return array
      */
     public function vote(int $score)
     {
         // using laravel's auto morph fill in
         if ($this->votes()->where(['user_id' => auth()->id()])->exists()) {
-            $this->votes()->where(['user_id' => auth()->id()])->update(['score' => $score]);
+            $this->votes()->where(['user_id' => auth()->id()])->first()->update(['score' => $score]);
+            return ['action' => 'update'];
         } else {
             $this->votes()->create(['user_id' => auth()->id(), 'score' => $score]);
+            return ['action' => 'create'];
         }
 
         // Vote::create([
@@ -33,29 +35,41 @@ trait Votable
         // ]);
     }
 
-    public function upVotesCount()
+    public function getUpVotesCountAttribute()
     {
         return $this->votes->where('score', 1)->count();
     }
 
-    public function downVotesCount()
+    public function getDownVotesCountAttribute()
     {
         return $this->votes->where('score', -1)->count();
     }
 
+    public function getCurrentVoteAttribute()
+    {
+        return $this->votes->where('user_id', auth()->id())->sum('score');
+    }
+
     public function isUpVote()
     {
-        return !! $this->votes
-            ->where('user_id', auth()->id())
-            ->where('score', 1)
-            ->count();
+        return $this->getCurrentVoteAttribute() > 0;
     }
 
     public function isDownVote()
     {
-        return !! $this->votes
-            ->where('user_id', auth()->id())
-            ->where('score', -1)
-            ->count();
+        return $this->getCurrentVoteAttribute() < 0;
+    }
+
+    /**
+     * votePath
+     * Get the path where vote request post to
+     * @param String $action
+     * @return String
+     */
+    public function votePath($action = "vote-up")
+    {
+        $type = strtolower((new \ReflectionClass($this))->getShortName());
+        $type_plural = str_plural($type, 2);
+        return "/{$type_plural}/{$this->id}/vote/{$action}";
     }
 }

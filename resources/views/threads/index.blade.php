@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="card-header">
                         <span class="h4">
-                            <a href="{{$thread->path()}}">{{$thread->title}}</a>
+                            <a class="card-link" href="{{$thread->path()}}">{{$thread->title}}</a>
                         </span>
                         <span class="pull-right">
                             <a href="{{ $thread->path() }}" class="badge badge-pill badge-secondary">

@@ -3,8 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Activity;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ManageThreadTest extends TestCase
@@ -14,7 +13,7 @@ class ManageThreadTest extends TestCase
     public function setUp()
     {
         parent::setup();
-        $this->thread = create('App\Thread');
+        // $this->thread = create('App\Thread');
     }
 
     /** @test */
@@ -52,7 +51,9 @@ class ManageThreadTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $this->delete($this->thread->path())
+        $thread = create('App\Thread');
+
+        $this->delete($thread->path())
             ->assertRedirect('/login');
     }
 
@@ -62,12 +63,14 @@ class ManageThreadTest extends TestCase
         $this->signIn();
 
         $thread = create('App\Thread', ['user_id' => auth()->id()]);
-        $reply = create('App\Reply', ['thread_id' => $thread->id], 2);
+        $reply = create('App\Reply', ['thread_id' => $thread->id]);
 
         $this->delete($thread->path())->assertStatus(302); // assert redirect
 
         $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
         $this->assertDatabaseMissing('replies', ['thread_id' => $thread->id]);
+
+        $this->assertEquals(0, Activity::count());
     }
 
     /** @test */
@@ -80,7 +83,7 @@ class ManageThreadTest extends TestCase
         $this->delete($threadOfThisUser->path())->assertStatus(302);
         $this->assertDatabaseMissing('threads', ['id' => $threadOfThisUser->id]);
 
-        $threadOfOtherUser = $this->thread;
+        $threadOfOtherUser = create('App\Thread');
 
         $this->delete($threadOfOtherUser->path())->assertStatus(403);
         $this->assertDatabaseHas('threads', ['id' => $threadOfOtherUser->id]);
@@ -95,9 +98,11 @@ class ManageThreadTest extends TestCase
 
         $this->get($thread->path())->assertSee('id="delete-btn"');
 
-        $this->get($this->thread->path())->assertDontSee('id="delete-btn"');
+        $thread = create('App\Thread');
+
+        $this->get($thread->path())->assertDontSee('id="delete-btn"');
     }
-    
+
 
     /** @test */
     public function a_thread_requires_a_title()

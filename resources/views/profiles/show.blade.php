@@ -10,29 +10,15 @@
                 </h3>
             </div>
             <hr>
-            @foreach ($threads as $thread)
-                <div class="card">
-                    <div class="card-header">
-                        <span>
-                            <a class="card-link" href="">
-                                {{$thread->owner->name}}
-                            </a>
-                            posted:
-                             <a href="{{ $thread->path() }}">
-                                {{ $thread->title}}
-                            </a> 
-                        </span>
-                        <span class="float-right">
-                            {{ $thread->created_at->diffForHumans() }}
-                        </span>
-                    </div>
-                    <div class="card-body">
-                        {{$thread->body}}
-                    </div>
-                </div>
-                <br>
+            @foreach ($activities as $date => $activitiesByDay)
+                <h5 class="pt-3"> {{ $date }} </h5>
+                <hr>
+                @foreach ($activitiesByDay as $activity)
+                    @if (view()->exists("profiles.activities.{$activity->type}"))
+                        @include ("profiles.activities.{$activity->type}")
+                    @endif
+                @endforeach
             @endforeach 
-            {{ $threads->links() }}
         </div>
 </div>
 @endsection
