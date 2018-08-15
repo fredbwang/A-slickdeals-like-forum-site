@@ -10,5 +10,6 @@ Right now
 1. supports user login, posts, categories, comments.
 2. supports hot deals, personal posts, vote up and down.
 3. supports user profile page, including posted threads and activities.
+4. supports editing and deletion of comments.
 
 ### More features are coming!
