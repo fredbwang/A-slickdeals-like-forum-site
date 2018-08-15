@@ -62,8 +62,6 @@ class ManageThreadTest extends TestCase
     {
         $this->signIn();
 
-        $activityNum = Activity::count();
-
         $thread = create('App\Thread', ['user_id' => auth()->id()]);
         $reply = create('App\Reply', ['thread_id' => $thread->id]);
 
@@ -72,7 +70,7 @@ class ManageThreadTest extends TestCase
         $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
         $this->assertDatabaseMissing('replies', ['thread_id' => $thread->id]);
 
-        $this->assertEquals($activityNum, Activity::count());
+        $this->assertEquals(0, Activity::count());
     }
 
     /** @test */

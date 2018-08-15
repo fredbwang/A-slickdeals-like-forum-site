@@ -9,12 +9,23 @@ use App\Utils\RecordActivity;
 class Reply extends Model
 {
     use RecordActivity;
-    
+
     use Votable;
 
     protected $guarded = [];
 
     protected $with = ['owner', 'votes', 'thread'];
+
+    protected $appends = ['upVotesCount', 'downVotesCount', 'currentVote'];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($reply) {
+            $reply->votes->each->delete();
+        });
+    }
 
     public function owner()
     {
@@ -26,7 +37,8 @@ class Reply extends Model
         return $this->belongsTo(Thread::class, 'thread_id');
     }
 
-    public function path() {
+    public function path()
+    {
         return $this->thread->path() . "#reply-{$this->id}";
     }
 }

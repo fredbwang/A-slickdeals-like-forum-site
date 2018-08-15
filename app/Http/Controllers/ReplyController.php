@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Thread;
+use App\Reply;
 use Illuminate\Http\Request;
 
 class ReplyController extends Controller
@@ -30,5 +31,37 @@ class ReplyController extends Controller
         ]);
 
         return back()->with('flash', 'You have commented on this deal');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Reply  $thread
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Reply $reply)
+    {
+        $this->authorize('delete', $reply);
+
+        $reply->delete();
+
+        if (request()->expectsJson()) {
+            return response(['status' => 'Reply deleted'], 202);
+        }
+
+        return back();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  App\Reply $reply
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Reply $reply)
+    {
+        $this->authorize('update', $reply);
+
+        $reply->update(['body' => request('body')]);
     }
 }

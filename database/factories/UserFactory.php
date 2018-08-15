@@ -54,3 +54,22 @@ $factory->define(App\Reply::class, function (Faker $faker) {
         'body' => $faker->paragraph
     ];
 });
+
+$factory->define(App\Vote::class, function (Faker $faker) {
+    $votables = [
+        // App\Thread::class,
+        App\Reply::class,
+    ]; 
+
+    $votedType = $faker->randomElement($votables);
+    $voted = factory($votedType)->create();
+
+    return [
+        'user_id' => function () {
+            return factory('App\User')->create()->id;
+        },
+        'voted_id' => $voted->id,
+        'voted_type' => $votedType,
+        'score' => $faker->randomElement([1, -1]),
+    ];
+});

@@ -45,13 +45,13 @@ class Thread extends Model
     {
         return $this->hasMany(Reply::class)
             ->withCount([
-                'votes as up_votes_count' => function ($query) {
+                'votes as upVotesCount' => function ($query) {
                     $query->where('score', 1);
                 },
-                'votes as down_votes_count' => function ($query) {
+                'votes as downVotesCount' => function ($query) {
                     $query->where('score', -1);
                 },
-                'votes as current_vote' => function ($query) {
+                'votes as currentVote' => function ($query) {
                     $query->where('user_id', auth()->id());
                 }
             ])

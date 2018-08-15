@@ -1,6 +1,6 @@
 <template>
     <div class="alert alert-success alert-flash fade show" role="alert" v-show="show">
-        <strong>Success!</strong> {{ body }}
+        <strong>Great!</strong> {{ body }}
     </div>
 </template>
 

@@ -9,15 +9,6 @@ class Vote extends Model
 {
     use RecordActivity;
 
-    public static function boot()
-    {
-        parent::boot();
-
-        // static::updated(function ($subject) {
-        //     $subject->recordActivity('updated');
-        // });
-    }
-
     /**
      * @Override getEventsToRecord in RecordActivity trait
      *
