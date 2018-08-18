@@ -59,17 +59,39 @@ $factory->define(App\Vote::class, function (Faker $faker) {
     $votables = [
         // App\Thread::class,
         App\Reply::class,
-    ]; 
+    ];
 
     $votedType = $faker->randomElement($votables);
-    $voted = factory($votedType)->create();
 
     return [
         'user_id' => function () {
             return factory('App\User')->create()->id;
         },
-        'voted_id' => $voted->id,
+        'voted_id' => function () {
+            return factory($votedType)->create()->id;
+        },
         'voted_type' => $votedType,
         'score' => $faker->randomElement([1, -1]),
+    ];
+});
+
+$factory->define(App\Activity::class, function (Faker $faker) {
+    $subjectTypes = [
+        App\Thread::class,
+        App\Reply::class,
+        App\Vote::class,
+    ];
+
+    $subjectType = $faker->randomElement($subjectTypes);
+
+    return [
+        'user_id' => function () {
+            return factory('App\User')->create()->id;
+        },
+        'type' => 'created_' . explode('\\', strtolower($subjectType))[1],
+        'subject_id' => function () {
+            return factory($subjectType)->create()->id;
+        },
+        'subject_type' => $subjectType,
     ];
 });
