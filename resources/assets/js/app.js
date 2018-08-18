@@ -5,6 +5,13 @@
  */
 
 window.Vue = require('vue');
+Vue.prototype.authorize = (handler) => {
+
+    let user = window.App.user;
+
+    return user ? handler(user) : false;
+}
+
 require('./bootstrap');
 
 /**
@@ -12,11 +19,12 @@ require('./bootstrap');
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+// simple components
 Vue.component('flash', require('./components/Flash.vue'));
-Vue.component('reply', require('./components/Reply.vue'));
-// Vue.component('vote', require('./components/Vote.vue'));
+Vue.component('paginator', require('./components/Paginator.vue'));
+
+// page-level components
+Vue.component('thread', require('./pages/Thread.vue'));
 
 const app = new Vue({
     el: '#app'
