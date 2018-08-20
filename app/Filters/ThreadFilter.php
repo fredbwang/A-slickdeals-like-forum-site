@@ -49,7 +49,7 @@ class ThreadFilter extends Filter
     {
         // empty the query order
         // $this->queryBuilder->getQuery()->orders = []
-        
+
         $this->queryBuilder->orderBy('replies_count', 'desc');
         return;
     }
@@ -60,8 +60,17 @@ class ThreadFilter extends Filter
      *
      * @return void
      */
-    public function uncommented() {
-        $this->queryBuilder->having('replies_count', 0);
+    public function uncommented()
+    {
+         // sqlite can't have having before group by clause
+         // mysql can't reference column name after 'as' in where clause
+         // so we can't have green in test and website both
+         // instead we use unefficient method has, which operated query in where clause again
+        
+        // $query = $this->queryBuilder->having('replies_count', 0);
+        // $query = $this->queryBuilder->where('replies_count', 0);
+
+        $query = $this->queryBuilder->doesntHave('replies');
         return;
     }
 }
