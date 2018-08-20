@@ -1,8 +1,11 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark navbar-laravel">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-            Laravel
-            {{-- <img style="height:50px" x-enc="src" src="https://c-8oqtgrjgwu46x24uvcvkex2eunkemfgcnuefpx2eeqo.g00.slickdeals.net/g07/3_c-8unkemfgcnu.pgv_/c-8OQTGRJGWU46x24jvvrux3ax2fx2fuvcvke.unkemfgcnuefp.eqox2fkocigux2fjgcfgtx2funkemfgcnuNqiq.rpix3f8415x26k32e.octmx3dkocig_$/$/$/$"> --}}
+            @if (config('app.name') == 'Laravel')
+                Laravel
+            @else 
+                <img style="height:50px" x-enc="src" src="https://c-8oqtgrjgwu46x24uvcvkex2eunkemfgcnuefpx2eeqo.g00.slickdeals.net/g07/3_c-8unkemfgcnu.pgv_/c-8OQTGRJGWU46x24jvvrux3ax2fx2fuvcvke.unkemfgcnuefp.eqox2fkocigux2fjgcfgtx2funkemfgcnuNqiq.rpix3f8415x26k32e.octmx3dkocig_$/$/$/$">
+            @endif
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
@@ -15,17 +18,23 @@
                     <a class="nav-link" href="/threads">Front Page Deals</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbar-category-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Category
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu" aria-labelledby="navbar-category-dropdown">
                         @foreach ($channels as $channel)
                             <a class="dropdown-item" href="/threads/{{$channel->slug}}">{{$channel->name}}</a>     
                         @endforeach
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a href="/threads/?popular=1" class="nav-link">Hot Deals</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbar-browse-ropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Browse
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbar-browse-dropdown">
+                        <a class="dropdown-item" href="/threads/?uncommented=1">Uncommented Deals</a>                                 
+                        <a class="dropdown-item" href="/threads/?popular=1" class="nav-link">Hot Deals</a>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/threads/create">Post a Deal</a>
