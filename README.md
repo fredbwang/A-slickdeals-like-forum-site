@@ -8,8 +8,10 @@ The demo website is online at [www.borei-coding-land](http://www.borei-coding-la
 You are welcomed to try it out and raise issue. Though it is crude and simple.
 Right now 
 1. supports user login, posts, categories, comments.
-2. supports hot deals, personal posts, vote up and down.
-3. supports user profile page, including posted threads and activities.
-4. supports editing and deletion of comments.
+2. supports thread filtering, hot deals, posts by user, posts by channel, uncommented posts.
+3. supports vote up and down.
+4. supports user profile page, including posted threads and activities.
+5. supports editing and deletion of comments.
+6. supports posts subscription and user notification.
 
 ### More features are coming!
