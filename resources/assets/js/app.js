@@ -22,6 +22,7 @@ require('./bootstrap');
 // simple components
 Vue.component('flash', require('./components/Flash.vue'));
 Vue.component('paginator', require('./components/Paginator.vue'));
+Vue.component('user-notifications', require('./components/UserNotifications.vue'));
 
 // page-level components
 Vue.component('thread', require('./pages/Thread.vue'));

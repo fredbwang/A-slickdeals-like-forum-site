@@ -1,5 +1,6 @@
 <?php
 
+use \Ramsey\Uuid\Uuid as Uuid;
 use Faker\Generator as Faker;
 
 /*
@@ -93,5 +94,24 @@ $factory->define(App\Activity::class, function (Faker $faker) {
             return factory($subjectType)->create()->id;
         },
         'subject_type' => $subjectType,
+    ];
+});
+
+$factory->define(App\Subscription::class, function (Faker $faker) {
+    return [
+        //
+    ];
+});
+
+$factory->define(\Illuminate\Notifications\DatabaseNotification::class, function (Faker $faker) {
+    return [
+        'id' => Uuid::uuid4(),
+        'type' => 'App\Notifications\ThreadUpdated',
+        'notifiable_id' => function() {
+            return auth()->id() ?: factory('App\User')->create()->id;
+        },
+
+        'notifiable_type' => 'App\User',
+        'data' => [$faker->name => $faker->name],
     ];
 });
