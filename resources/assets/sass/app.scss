@@ -17,6 +17,16 @@ a {
     color: #2f88ce;
 }
 
+#notifications-badge {
+    right: 10px;
+    bottom: 10px;
+}
+
+#notification-dropdown .fa-circle {
+    color: #007bff !important;
+    font-size: xx-small;
+}
+
 [v-cloak] {
     display: none;
 }

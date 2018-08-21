@@ -8,11 +8,11 @@ use App\Channel;
 
 class ThreadFilter extends Filter
 {
-    protected $filterBys = ['createBy', 'belongTo', 'popular'];
+    protected $filterBys = ['createBy', 'belongTo', 'popular', 'uncommented'];
 
     /**
      * createBy
-     * filter by which user created the thread
+     * Filter by which user created the thread
      * @param String $username
      * @return void
      */
@@ -27,7 +27,7 @@ class ThreadFilter extends Filter
 
     /**
      * belongTo
-     * filter by which channel the thread belongs to
+     * Filter by which channel the thread belongs to
      * @param String $channelSlug
      * @return void
      */
@@ -41,16 +41,36 @@ class ThreadFilter extends Filter
     }
 
     /**
-     * howPopular
-     * filter threads by popularity in desc order
+     * popular
+     * Filter threads by popularity in desc order
      * @return void
      */
     public function popular()
     {
         // empty the query order
         // $this->queryBuilder->getQuery()->orders = []
-        
+
         $this->queryBuilder->orderBy('replies_count', 'desc');
+        return;
+    }
+
+    /**
+     * uncommented
+     * Filter threads by answered or not
+     *
+     * @return void
+     */
+    public function uncommented()
+    {
+         // sqlite can't have having before group by clause
+         // mysql can't reference column name after 'as' in where clause
+         // so we can't have green in test and website both
+         // instead we use unefficient method has, which operated query in where clause again
+        
+        // $query = $this->queryBuilder->having('replies_count', 0);
+        // $query = $this->queryBuilder->where('replies_count', 0);
+
+        $query = $this->queryBuilder->doesntHave('replies');
         return;
     }
 }

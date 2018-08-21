@@ -31,8 +31,8 @@ class ParticipateInForumTest extends TestCase
 
         $this->post($thread->path('/replies'), $reply->toArray());
 
-        $this->get($thread->path())
-            ->assertSee($reply->body);
+        $response = $this->getJson($thread->path('/replies'))->json();
+        $this->assertEquals($response['data'][0]['body'], $reply->body);
     }
 
     /** @test */

@@ -6,6 +6,7 @@ use App\Utils\Votable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Utils\RecordActivity;
+use App\Notifications\ThreadUpdated;
 
 class Thread extends Model
 {
@@ -16,6 +17,8 @@ class Thread extends Model
     protected $guarded = [];
 
     protected $with = ['owner', 'votes', 'channel'];
+
+    protected $appends = ['isSubscribedTo'];
 
     public static function boot()
     {
@@ -33,6 +36,7 @@ class Thread extends Model
 
             // laravel higher order collection proxy
             $thread->replies->each->delete();
+            $thread->subscriptions->each->delete();
         });
     }
 
@@ -70,11 +74,54 @@ class Thread extends Model
 
     public function addReply($reply)
     {
-        $this->replies()->create($reply);
+        $reply = $this->replies()->create($reply);
+
+        // prepare notifications for subscribing users
+        $this->subscriptions
+            ->filter(function ($subject) use ($reply) {
+                return $subject->user_id != $reply->user_id;
+            })
+            ->each->notify($reply);
+
+        return $reply;
     }
 
     public function scopeFilterWith($query, $filters)
     {
         return $filters->apply($query);
+    }
+
+    /**
+     * subscribedBy
+     *
+     * @param int $userId
+     * @return $this
+     */
+    public function subscribedBy($userId = null)
+    {
+        $this->subscriptions()->create([
+            'user_id' => $userId ? : auth()->id(),
+        ]);
+
+        return $this;
+    }
+
+    public function unsubscribedFrom($userId = null)
+    {
+        $this->subscriptions()
+            ->where('user_id', $userId ? : auth()->id())
+            ->delete();
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
+    public function getIsSubscribedToAttribute($userId = null)
+    {
+        return $this->subscriptions()
+            ->where('user_id', $userId ? : auth()->id())
+            ->exists();
     }
 }

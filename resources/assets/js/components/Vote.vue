@@ -1,5 +1,5 @@
 <template>
-    <div class="vote-section float-right">
+    <div class="vote-section float-right" v-if="signedIn">
         <button type="submit" :class="upVoteClasses" @click="toggleVote('vote-up')">
             <i class="fa fa-thumbs-up"></i>
             <span v-text="upVotesCount"></span>
@@ -28,6 +28,9 @@
             },
             currentType() {
                 return this.currentVote > 0 ? 'vote-up' : this.currentVote < 0 ? 'vote-down' : 'no-vote';
+            },
+            signedIn() {
+                return window.App.signedIn;
             }
         },
         data() {

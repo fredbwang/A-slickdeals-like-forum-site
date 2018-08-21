@@ -10,7 +10,17 @@ class ReplyController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'index']);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index($channel, Thread $thread)
+    {
+        return $thread->replies()->paginate(5);
     }
 
     /**
@@ -25,10 +35,14 @@ class ReplyController extends Controller
     {
         $this->validate($request, ['body' => 'required']);
 
-        $thread->addReply([
+        $reply = $thread->addReply([
             'body' => request('body'),
             'user_id' => auth()->id()
         ]);
+
+        if (request()->expectsJson()) {
+            return $reply->load('owner');
+        }
 
         return back()->with('flash', 'You have commented on this deal');
     }
