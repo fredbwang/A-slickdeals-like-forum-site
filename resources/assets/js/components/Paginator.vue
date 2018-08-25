@@ -6,7 +6,7 @@
                 <span class="sr-only">Previous</span>
             </a>
         </li>
-        <li class="page-item">
+        <!-- <li class="page-item">
             <a class="page-link" href="#">1</a>
         </li>
         <li class="page-item">
@@ -14,7 +14,7 @@
         </li>
         <li class="page-item">
             <a class="page-link" href="#">3</a>
-        </li>
+        </li> -->
         <li class="page-item" v-show="nextPageUrl" @click.prevent="changePage(currentPage+1)">
             <a class="page-link" href="#" aria-label="Next" rel="next">
                 <span aria-hidden="true">&raquo;</span>
