@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Thread;
 use App\Reply;
+use App\Notifications\WereMentioned;
 use App\Http\Requests\CreateThreadRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;

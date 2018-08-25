@@ -38,6 +38,13 @@ class ReplyTest extends TestCase
 
         $this->assertFalse($oldReply->wasJustCreated());
     }
-    
+
+    /** @test */
+    public function it_can_detect_all_mentioned_users_in_its_body()
+    {
+        $reply = create('App\Reply', ['body' => 'some test, @user_1 and  @user_2']);
+
+        $this->assertEquals(['user_1', 'user_2'], $reply->mentionedUsers());
+    }
 
 }
