@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Validator;
 use App\Channel;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,11 +20,13 @@ class AppServiceProvider extends ServiceProvider
         // \View::share('channels', Channel::all());
 
         View::composer('*', function ($view) {
-            $channels = Cache::remember('channels', 60, function() {
+            $channels = Cache::remember('channels', 60, function () {
                 return Channel::all();
             });
             $view->with('channels', $channels);
         });
+
+        Validator::extend('spamfree', 'App\Rules\SpamFree@passes');
     }
 
     /**

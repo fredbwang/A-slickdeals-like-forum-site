@@ -1,33 +1,47 @@
 <template>
-    <div class="alert alert-success alert-flash fade show" role="alert" v-show="show">
-        <strong>Great!</strong> {{ body }}
+    <div class="alert alert-flash fade show" :class="'alert-' + type" role="alert" v-show="show">
+        <strong v-text="phrase"></strong> {{ body }}
     </div>
 </template>
 
 <script>
     export default {
-        props: ['message'],
+        props: ['data'],
+        computed: {
+            phrase() {
+                switch (this.type) {
+                    case 'success':
+                        return 'Great!';
+                    case 'danger':
+                        return 'Whoops!';
+                    default:
+                        return '';
+                }
+            }
+        },
         data() {
             return {
                 body: '',
-                show: false
+                type: 'success',
+                show: false,
             }
         },
         created() {
             // initialize flash body with message when flash card created
-            if (this.message) {
-                this.flash(this.message);
+            if (this.data) {
+                this.flash(this.data);
             }
 
             // listen for flash events and accept its message
-            window.events.$on('flash', message => {
-                this.flash(message);
+            window.events.$on('flash', data => {
+                this.flash(data);
             });
         },
         methods: {
             // flash a card with message
-            flash(message) {
-                this.body = message;
+            flash(data) {
+                this.body = data.message;
+                this.type = data.type;
                 this.show = true;
                 this.hide();
             },

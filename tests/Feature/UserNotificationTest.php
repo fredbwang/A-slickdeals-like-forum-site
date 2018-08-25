@@ -35,7 +35,7 @@ class UserNotificationTest extends TestCase
         $this->assertCount(0, auth()->user()->fresh()->notifications);
 
         $thread->addReply([
-            'user_id' => $user = create('App\User'),
+            'user_id' => create('App\User')->id,
             'body' => 'A reply',
         ]);
 

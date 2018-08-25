@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use \Exception;
 use App\Thread;
 use App\Channel;
-use Illuminate\Http\Request;
 use App\Filters\ThreadFilter;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Console\Presets\React;
 
 class ThreadController extends Controller
@@ -50,9 +51,10 @@ class ThreadController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required',
+            'title' => 'required|spamfree',
+            'body' => 'required|spamfree',
             'channel_id' => 'required|exists:channels,id'
         ]);
 
@@ -64,7 +66,10 @@ class ThreadController extends Controller
         ]);
 
         return redirect($thread->path())
-            ->with('flash', 'Your deal has been posted!');
+            ->with('flash', [
+                'message' => 'Your deal has been posted!',
+                'type' => 'success'
+            ]);
     }
 
     /**
@@ -121,7 +126,7 @@ class ThreadController extends Controller
         if ($channel->exists) {
             $threads = $threads->where('channel_id', $channel->id);
         }
-        
+
         return $threads->latest()->get();
     }
 }

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Thread;
 use App\Reply;
+use App\Http\Requests\CreateThreadRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use \Exception;
 
 class ReplyController extends Controller
 {
@@ -28,23 +31,27 @@ class ReplyController extends Controller
      *
      * @param int $channelId
      * @param App\Thread $thread
-     * @param Request $request
+     * @param App\Http\Requests\CreateThreadRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store($channelId, Thread $thread, Request $request)
+    public function store($channelId, Thread $thread)
     {
-        $this->validate($request, ['body' => 'required']);
-
-        $reply = $thread->addReply([
-            'body' => request('body'),
-            'user_id' => auth()->id()
-        ]);
-
-        if (request()->expectsJson()) {
-            return $reply->load('owner');
+        if (Gate::denies('create', new Reply)) {
+            return response('You are commenting too frequently.', 429);
         }
 
-        return back()->with('flash', 'You have commented on this deal');
+        try {
+            request()->validate(['body' => 'required|spamfree']);
+
+            $reply = $thread->addReply([
+                'body' => request('body'),
+                'user_id' => auth()->id()
+            ]);
+        } catch (Exception $e) {
+            return response('We could\'t process your request now.', 422);
+        }
+
+        return $reply->load('owner');
     }
 
     /**
@@ -75,6 +82,12 @@ class ReplyController extends Controller
     public function update(Reply $reply)
     {
         $this->authorize('update', $reply);
+
+        try {
+            request()->validate(['body' => 'required|spamfree']);
+        } catch (Exception $e) {
+            return response('We could\'t process your request now.', 422);
+        }
 
         $reply->update(['body' => request('body')]);
     }
