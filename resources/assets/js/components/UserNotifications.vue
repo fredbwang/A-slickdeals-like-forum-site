@@ -6,7 +6,7 @@
         </a>
 
         <ul class="dropdown-menu dropdown-menu-right">
-            <li :key="notification.id" v-for="(notification, index) in notifications">
+            <li :key="notification.id" v-for="(notification) in notifications">
                 <a class="dropdown-item" :id="'notification-'+notification.id" @click="markAsRead(notification)" :href="notification.data.link"
                     v-html="notificationContent(notification)">
                 </a>
@@ -27,7 +27,6 @@
         created() {
             axios.get("/profiles/" + window.App.user.name + "/notifications")
                 .then(response => {
-                    console.log(response.data);
                     this.notifications = response.data;
                 });
         },

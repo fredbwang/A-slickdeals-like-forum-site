@@ -27,4 +27,17 @@ class ReplyTest extends TestCase
         $this->assertEquals($replyPath, $reply->path());
     }
 
+    /** @test */
+    public function it_can_tell_if_it_was_just_posted()
+    {
+        $reply = create('App\Reply');
+
+        $this->assertTrue($reply->wasJustCreated());
+        
+        $oldReply = create('App\Reply', ['created_at' => now()->subMinutes(30)]);
+
+        $this->assertFalse($oldReply->wasJustCreated());
+    }
+    
+
 }

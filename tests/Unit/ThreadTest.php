@@ -4,7 +4,9 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\Notification;
 use Faker\Factory as Faker;
+use App\Notifications\ThreadUpdated;
 
 class ThreadTest extends TestCase
 {
@@ -55,6 +57,24 @@ class ThreadTest extends TestCase
         $this->assertCount(1, $this->thread->replies);
     }
 
+    /** @test */
+    public function can_notify_subscribers_when_reply_added()
+    {
+        Notification::fake();
+
+        $this->signIn();
+        
+        $this->thread
+            ->subscribedBy()
+            ->addReply([
+                'body' => 'some text',
+                'user_id' => $userId = create('App\User')->id,
+            ]);
+
+        Notification::assertSentTo(auth()->user(), ThreadUpdated::class);
+    }
+
+
     /** @test*/
     public function a_thread_belongs_to_a_channel()
     {
@@ -87,12 +107,12 @@ class ThreadTest extends TestCase
     public function it_knows_whether_it_is_subscribed_by_a_user()
     {
         $this->signIn();
-        
-        $this->assertFalse($this->isSubscribedBy);
 
-        $thread->subscribedBy(auth()->id());
+        $this->assertFalse($this->thread->isSubscribedBy);
 
-        $this->assertTrue($this->isSubscribedBy);
+        $this->thread->subscribedBy(auth()->id());
+
+        $this->assertTrue($this->thread->isSubscribedBy);
     }
-    
+
 }

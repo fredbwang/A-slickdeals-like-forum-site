@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Exception;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ParticipateInForumTest extends TestCase
@@ -40,13 +41,12 @@ class ParticipateInForumTest extends TestCase
     {
 
         $thread = create('App\Thread');
-        $reply = make('App\Reply', ['body' => null]);
+        $reply = raw('App\Reply', ['body' => null]);
 
         $this->withExceptionHandling()->signIn();
 
-        $this->post($thread->path('/replies'), $reply->toArray())
-            ->assertSessionHasErrors('body');
-
+        $response = $this->postJson($thread->path('/replies'), $reply)
+            ->assertStatus(422);
     }
 
     /** @test */
@@ -136,5 +136,31 @@ class ParticipateInForumTest extends TestCase
         $this->assertDatabaseHas('replies', ['id' => $replyOfThisUser->id, 'body' => $updatedBody])
             ->assertDatabaseMissing('replies', ['id' => $replyOfOtherUser->id, 'body' => $updatedBody]);
     }
+
+    /** @test */
+    public function replies_containing_spam_is_not_allowed_to_be_created()
+    {
+        $this->withExceptionHandling()->signIn();
+
+        $thread = create('App\Thread');
+
+        $reply = raw('App\Reply', ['body' => 'spam']);
+        
+        $this->postJson($thread->path('/replies'), $reply)->assertStatus(422);
+    }
+    
+    /** @test */
+    public function a_user_can_only_reply_once_per_minute()
+    {
+        $this->signIn();
+    
+        $thread = create('App\Thread');
+    
+        $reply = raw('App\Reply', ['body' => 'some reply']);
+        
+        $this->postJson($thread->path('/replies'), $reply)->assertStatus(201); // 201 created
+        $this->postJson($thread->path('/replies'), $reply)->assertStatus(429); // too many requests
+    }
+    
 
 }
