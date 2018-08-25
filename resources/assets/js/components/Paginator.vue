@@ -6,15 +6,11 @@
                 <span class="sr-only">Previous</span>
             </a>
         </li>
-        <!-- <li class="page-item">
-            <a class="page-link" href="#">1</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">3</a>
-        </li> -->
+        <template inline-template v-for="index in dataSet.last_page">
+            <li :key="index" class="page-item">
+                <a class="page-link" href="#" @click.prevent="changePage(index)">{{ index }}</a>
+            </li>
+        </template>
         <li class="page-item" v-show="nextPageUrl" @click.prevent="changePage(currentPage+1)">
             <a class="page-link" href="#" aria-label="Next" rel="next">
                 <span aria-hidden="true">&raquo;</span>
