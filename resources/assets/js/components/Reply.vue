@@ -18,7 +18,7 @@
                 <button class="btn btn-sm btn-light float-right mr-1" @click="cancel">Cancel</button>
             </div>
 
-            <div v-else v-text="body"></div>
+            <div v-else v-html="body"></div>
         </div>
 
 
@@ -32,6 +32,7 @@
 <script>
     import Vote from './Vote.vue';
     import moment from 'moment';
+    import atwho from 'at.js';
 
     export default {
         props: ["data"],

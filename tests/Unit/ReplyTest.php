@@ -33,7 +33,7 @@ class ReplyTest extends TestCase
         $reply = create('App\Reply');
 
         $this->assertTrue($reply->wasJustCreated());
-        
+
         $oldReply = create('App\Reply', ['created_at' => now()->subMinutes(30)]);
 
         $this->assertFalse($oldReply->wasJustCreated());
@@ -42,9 +42,20 @@ class ReplyTest extends TestCase
     /** @test */
     public function it_can_detect_all_mentioned_users_in_its_body()
     {
-        $reply = create('App\Reply', ['body' => 'some test, @user_1 and  @user_2']);
+        $reply = create('App\Reply', ['body' => 'some text, @user_1 and  @user_2']);
 
         $this->assertEquals(['user_1', 'user_2'], $reply->mentionedUsers());
+    }
+
+    /** @test */
+    public function it_wraps_metioned_users_into_anchor_tags()
+    {
+        $reply = create('App\Reply', ['body' => 'some text, @user_1.']);
+
+        $this->assertEquals(
+            'some text, <a href="/profiles/user_1">@user_1</a>.',
+            $reply->body
+        );
     }
 
 }

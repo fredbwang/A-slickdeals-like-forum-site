@@ -12,6 +12,8 @@ class Reply extends Model
 
     use Votable;
 
+    CONST MENTIONED_USER_NAME_PATTERN = '/(?<=^|(?<=[^a-zA-Z0-9-_\.]))@([A-Za-z]+[A-Za-z0-9-_]+)/';
+
     protected $guarded = [];
 
     protected $with = ['owner', 'votes', 'thread'];
@@ -49,8 +51,13 @@ class Reply extends Model
 
     public function mentionedUsers()
     {
-        preg_match_all('/\@([^\s\.]+)/', $this->body, $matches);
+        preg_match_all(self::MENTIONED_USER_NAME_PATTERN, $this->body, $matches);
 
         return $matches[1];
+    }
+
+    public function setBodyAttribute($body)
+    {
+        $this->attributes['body'] = preg_replace(self::MENTIONED_USER_NAME_PATTERN, '<a href="/profiles/$1">$0</a>', $body);
     }
 }

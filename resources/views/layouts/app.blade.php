@@ -21,6 +21,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    @yield('styles');
+
     <script>
         window.App = {!! json_encode([
             'signedIn' => auth()->check(),
