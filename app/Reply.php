@@ -46,7 +46,7 @@ class Reply extends Model
 
     public function wasJustCreated()
     {
-        return $this->created_at->gt(now()->subMinute());
+        return $this->created_at->gt(now()->subSeconds(10));
     }
 
     public function mentionedUsers()

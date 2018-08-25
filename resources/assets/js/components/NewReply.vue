@@ -1,11 +1,13 @@
 <template>
     <div>
         <div v-if="signedIn">
-            <div class="form-group">
-                <label for="body">Reply:</label>
-                <textarea class="form-control" name="body" id="body" rows="10" v-model="body" required placeholder="Say something about the deal?"></textarea>
-            </div>
-            <button class="btn btn-default" type="submit" @click="submitReply">Submit</button>
+            <form @submit="submitReply">
+                <div class="form-group">
+                    <label for="body">Reply:</label>
+                    <textarea class="form-control" name="body" id="body" rows="10" v-model="body" required placeholder="Say something about the deal?"></textarea>
+                </div>
+                <button class="btn btn-default" type="submit">Submit</button>
+            </form>
         </div>
 
         <div v-else class="row justify-content-center">
@@ -55,12 +57,12 @@
                 axios.post(this.endpoint, {
                         body: this.body
                     })
-                    .catch((error) => {
-                        flash(error.response.data, 'danger');
-                    })
                     .then((response) => {
                         this.body = "";
                         this.$emit('created', response.data);
+                    })
+                    .catch((error) => {
+                        flash(error.response.data, 'danger');
                     });
             }
         }

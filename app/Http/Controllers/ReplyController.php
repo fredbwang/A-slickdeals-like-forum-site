@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Thread;
 use App\Reply;
-use App\Notifications\WereMentioned;
-use App\Http\Requests\CreateThreadRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use \Exception;
+use Exception;
 
 class ReplyController extends Controller
 {
@@ -24,7 +22,7 @@ class ReplyController extends Controller
      */
     public function index($channel, Thread $thread)
     {
-        return $thread->replies()->paginate(5);
+        return $thread->replies()->paginate(8);
     }
 
     /**
@@ -32,7 +30,6 @@ class ReplyController extends Controller
      *
      * @param int $channelId
      * @param App\Thread $thread
-     * @param App\Http\Requests\CreateThreadRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store($channelId, Thread $thread)
@@ -49,7 +46,7 @@ class ReplyController extends Controller
                 'user_id' => auth()->id()
             ]);
         } catch (Exception $e) {
-            return response('We could\'t process your request now.', 422);
+            return response('Your comment is invalid!', 422);
         }
 
         return $reply->load('owner');
@@ -87,7 +84,7 @@ class ReplyController extends Controller
         try {
             request()->validate(['body' => 'required|spamfree']);
         } catch (Exception $e) {
-            return response('We could\'t process your request now.', 422);
+            return response('Your comment is invalid!', 422);
         }
 
         $reply->update(['body' => request('body')]);
