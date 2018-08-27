@@ -7,7 +7,7 @@
             </a>
         </li>
         <template inline-template v-for="index in dataSet.last_page">
-            <li :key="index" class="page-item">
+            <li :key="index" class="page-item" :class="currentPage==index ? 'active':''">
                 <a class="page-link" href="#" @click.prevent="changePage(index)">{{ index }}</a>
             </li>
         </template>
@@ -23,6 +23,7 @@
 <script>
     export default {
         props: ['dataSet'],
+
         data() {
             return {
                 currentPage: 1,
