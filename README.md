@@ -13,5 +13,7 @@ Right now
 4. supports user profile page, including posted threads and activities.
 5. supports editing and deletion of comments.
 6. supports posts subscription and user notification.
+7. supports user mentioning, user name auto completion.
+8. supports profile page avatar
 
 ### More features are coming!
