@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link rel="stylesheet" href="/css/vendor/jquery.atwho.css">
+@endsection
+
 @section('content')
 <thread inline-template :initial-replies-count="{{ $thread->replies_count }} ">
     <div class="container">
@@ -8,6 +12,7 @@
                 <div class="card">
                     <div class="card-header">
                         <span>
+                            <img src="{{ $thread->owner->avatar_path }}" alt="" width="25" height="25" class="mr-2">
                             <a class="card-link" href="/profiles/{{ $thread->owner->name }}">
                                 {{$thread->owner->name}}
                             </a> 

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Utils\RecordActivity;
 use App\Notifications\ThreadUpdated;
+use App\Events\ReplyCreated;
 
 class Thread extends Model
 {
@@ -76,12 +77,12 @@ class Thread extends Model
     {
         $reply = $this->replies()->create($reply);
 
-        $this->notifySubscribers($reply);
+        event(new ReplyCreated($reply));
 
         return $reply;
     }
 
-    protected function notifySubscribers($reply)
+    public function notifySubscribers($reply)
     {
         $this->subscriptions
             ->where('user_id', '!=', $reply->user_id)

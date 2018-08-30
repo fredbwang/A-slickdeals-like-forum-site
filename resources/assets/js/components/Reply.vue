@@ -11,14 +11,16 @@
         </div>
         <div class="card-body">
             <div v-if="editting">
-                <div class="form-group">
-                    <textarea class="form-control" v-model="body"></textarea>
-                </div>
-                <button class="btn btn-sm btn-primary float-right" @click="update">Submit</button>
-                <button class="btn btn-sm btn-light float-right mr-1" @click="cancel">Cancel</button>
+                <form @submit="update">
+                    <div class="form-group">
+                        <textarea class="form-control" v-model="body" required></textarea>
+                    </div>
+                    <button class="btn btn-sm btn-primary float-right" type="submit">Submit</button>
+                    <button class="btn btn-sm b tn-light float-right mr-1" @click="cancel" type="button">Cancel</button>
+                </form>
             </div>
 
-            <div v-else v-text="body"></div>
+            <div v-else v-html="body"></div>
         </div>
 
 
@@ -32,6 +34,7 @@
 <script>
     import Vote from './Vote.vue';
     import moment from 'moment';
+    import atwho from 'at.js';
 
     export default {
         props: ["data"],
@@ -60,14 +63,15 @@
         methods: {
             update() {
                 axios.patch('/replies/' + this.data.id, {
-                    body: this.body
-                }).catch(error => {
-                    flash(error.response.data, 'danger');
-                });
-
-                this.editting = false;
-
-                flash('Updated!');
+                        body: this.body
+                    })
+                    .then((response) => {
+                        this.editting = false;
+                        flash('Updated!');
+                    })
+                    .catch((error) => {
+                        flash(error.response.data, 'danger');
+                    });
             },
             destroy() {
                 axios.delete("/replies/" + this.data.id);

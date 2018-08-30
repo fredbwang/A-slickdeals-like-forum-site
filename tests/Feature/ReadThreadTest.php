@@ -141,7 +141,7 @@ class ReadThreadTest extends TestCase
 
         $response = $this->getJson('/threads?uncommented=1')->Json();
 
-        $this->assertCount(1, $response);
+        $this->assertCount(1, $response['data']);
     }
 
     /** @test */

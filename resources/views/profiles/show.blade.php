@@ -4,10 +4,9 @@
 <div class="row">
     <div class="container col-md-7">
             <div class="page-header">
-                <h3>
-                    {{ $profileUser->name }}
-                    <small> A member since {{ $profileUser->created_at->diffForHumans() }}</small>
-                </h3>
+
+                <avatar :user="{{ $profileUser }}" ></avatar>
+
             </div>
             <hr>
             @foreach ($activities as $date => $activitiesByDay)
