@@ -27,6 +27,11 @@ a {
     font-size: xx-small;
 }
 
+img.user-avatar-sm {
+    border-radius: 50px;
+    border: double 1px black;
+}
+
 [v-cloak] {
     display: none;
 }

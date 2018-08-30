@@ -13,7 +13,7 @@
         </div>
 
         <div class="input-group row mt-3" v-if="canUpdate">
-            <div class="custom-file col-md-3">
+            <div class="custom-file col-md-4">
                 <image-upload class="custom-file-input" v-if="canUpdate" @loaded="onLoad"></image-upload>
                 <label class="custom-file-label" for="avatar" v-text="current_file"></label>
             </div>
@@ -76,3 +76,10 @@
 
     }
 </script>
+
+<style>
+    img {
+        border-radius: 50px;
+        border: double 1px black;
+    }
+</style>
