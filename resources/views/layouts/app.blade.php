@@ -21,7 +21,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    @yield('styles');
+    @yield('styles')
 
     <script>
         window.App = {!! json_encode([

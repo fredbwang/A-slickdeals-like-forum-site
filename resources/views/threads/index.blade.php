@@ -20,7 +20,7 @@
                         </span>
                         <div>
                             By 
-                            <a href="/profiles/{{ $thread->owner->username }}" class="card-link">{{ $thread->owner->name }}</a>
+                            <a href="/profiles/{{ $thread->owner->name }}" class="card-link">{{ $thread->owner->name }}</a>
                             <span class="float-right">
                                 <a href="{{ $thread->path() }}" class="badge badge-pill badge-secondary">
                                     {{ $thread->replies_count }} {{ str_plural('comment', $thread->replies_count) }}
