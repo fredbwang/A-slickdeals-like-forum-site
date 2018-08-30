@@ -33,6 +33,9 @@
                     <div class="card-body">
                         {{$thread->body}}
                     </div>
+                    <div class="card-footer">
+                        {{ $thread->visitsCount }} Visits
+                    </div>
                 </div>
                 <br>
 

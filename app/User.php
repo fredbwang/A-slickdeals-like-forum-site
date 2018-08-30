@@ -6,10 +6,11 @@ use App\Thread;
 use App\Activity;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Utils\RecordVisit;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, RecordVisit;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +28,10 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token', 'email'
+    ];
+
+    protected $appends = [
+        'visitsCount'
     ];
 
     public function getRouteKeyName()
@@ -56,5 +61,10 @@ class User extends Authenticatable
         }
 
         return '/storage/' . $avatar_path;
+    }
+
+    public function getVisitsCountAttribute()
+    {
+        return $this->visits()->count();
     }
 }

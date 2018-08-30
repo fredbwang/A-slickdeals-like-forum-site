@@ -5,7 +5,10 @@
 
             <h3 class="mt-2">
                 {{ this.user.name }}
+                <br>
                 <small> A member since {{ ago }}</small>
+                <br>
+                <small> Has {{ this.user.visitsCount }} views by now</small>
             </h3>
         </div>
 

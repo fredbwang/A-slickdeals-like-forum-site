@@ -2,15 +2,16 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row">
         <div class="col-md-8">
             <div class="page-header">
-                <h3 class="strong">
-                    {{isset($channel) ? $channel->name :"All Deals"}}
-                </h3>
+                @if (isset($channel))
+                    <h3 class="strong">
+                        {{ $channel->name }}
+                    </h3>
+                    <hr>
+                @endif
             </div>
-
-            <hr>
             
             @forelse ($threads as $key => $thread)
                 <div class="card">
@@ -33,6 +34,9 @@
                             {{$thread->body}}
                         </div>
                     </div>
+                    <div class="card-footer">
+                        <i class="fa fa-eye"></i> {{ $thread->visitsCount }}
+                    </div>
                 </div>
                 <br>
             @empty
@@ -40,6 +44,26 @@
             @endforelse
 
             {{ $threads->render() }}
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header text-light bg-secondary">
+                    <i class="fa fa-fire"></i>
+                    Trending
+                </div>
+                <div class="card-body bg-default">
+                    @forelse($trending as $thread)
+                        <li class="card-title text-secondary">
+                            <a class="card-link text-secondary" href="{{ $thread->path }}">
+                                {{ $thread->title }}
+                            </a>
+                        </li>
+                    @empty
+                        @include('threads.easter-egg')
+                    @endforelse
+                </div>
+            </div>
         </div>
     </div>
 </div>
