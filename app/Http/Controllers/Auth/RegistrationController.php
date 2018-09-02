@@ -17,7 +17,7 @@ class RegistrationController extends Controller
     public function confirm()
     {
         $user = User::where('confirmation_token', request('token'))->first();
-
+        
         if (!$user) {
             return redirect(route('threads'))->with('flash', [
                 'message' => 'unknown token',
@@ -25,7 +25,7 @@ class RegistrationController extends Controller
             ]);
         }
 
-        if (auth()->user()->id != $user->id) auth()->logout();
+        if (auth()->check() && auth()->user()->id != $user->id) auth()->logout();
 
         $user->confirm();
 

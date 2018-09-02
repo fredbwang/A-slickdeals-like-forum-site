@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ConfirmYourEmail;
 use App\User;
@@ -45,13 +44,12 @@ class RegistrationTest extends TestCase
         $this->assertNotNull($user->confirmation_token);
     }
 
-
     /** @test */
     public function a_user_can_confirm_its_email_address_through_link()
     {
         $user = factory('App\User')->states('unconfirmed')->create();
-
-        $this->get(route('register.confirm'), ['token' => $user->confirmation_token])
+        
+        $response = $this->get(route('register.confirm') . '?token=' . $user->confirmation_token)
             ->assertRedirect(route('threads'));
 
         $this->assertTrue($user->fresh()->confirmed);
