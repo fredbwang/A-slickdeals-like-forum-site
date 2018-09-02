@@ -123,13 +123,27 @@ class ThreadTest extends TestCase
 
         $thread->visits()->reset();
 
+        $this->assertEquals(0, $thread->visits()->count());
+
+        $thread->visits()->record();
+
+        $this->assertEquals(1, $thread->visits()->count());
+    }
+
+
+    /** @test */
+    public function it_prevents_frequent_visits()
+    {
+        $thread = make('App\Thread', ['id' => 1]);
+
+        $thread->visits()->reset();
+
         $thread->visits()->record();
 
         $this->assertEquals(1, $thread->visits()->count());
 
         $thread->visits()->record();
 
-        $this->assertEquals(2, $thread->visits()->count());
+        $this->assertEquals(1, $thread->visits()->count());
     }
-
 }

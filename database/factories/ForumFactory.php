@@ -15,7 +15,6 @@ use Faker\Generator as Faker;
  */
 
 $factory->define(App\User::class, function (Faker $faker) {
-    
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
@@ -26,7 +25,7 @@ $factory->define(App\User::class, function (Faker $faker) {
     ];
 });
 
-$factory->state(App\User::class, 'unconfirmed', function () {
+$factory->state(App\User::class, 'unconfirmed', function (Faker $faker) {
     $email = $faker->unique()->safeEmail;
     return [
         'email' => $email,
@@ -119,8 +118,8 @@ $factory->define(\Illuminate\Notifications\DatabaseNotification::class, function
     return [
         'id' => Uuid::uuid4(),
         'type' => 'App\Notifications\ThreadUpdated',
-        'notifiable_id' => function() {
-            return auth()->id() ?: factory('App\User')->create()->id;
+        'notifiable_id' => function () {
+            return auth()->id() ? : factory('App\User')->create()->id;
         },
 
         'notifiable_type' => 'App\User',
