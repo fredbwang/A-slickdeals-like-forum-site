@@ -8,6 +8,7 @@ use App\Channel;
 use App\Filters\ThreadFilter;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Console\Presets\React;
+use App\Trending;
 
 class ThreadController extends Controller
 {
@@ -22,7 +23,7 @@ class ThreadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel, Request $request)
+    public function index(Channel $channel, Request $request, Trending $thrending)
     {
         $threads = $this->getThreads($channel, new ThreadFilter($request));
 
@@ -30,7 +31,11 @@ class ThreadController extends Controller
             return $threads;
         }
 
-        return view('threads.index', compact('threads', $channel->exists ? 'channel' : null));
+        return view('threads.index', [
+            'threads' => $threads,
+            'channel' => $channel->exists ? $channel : null,
+            'trending' => $thrending->get(),
+        ]);
     }
 
     /**
@@ -40,6 +45,14 @@ class ThreadController extends Controller
      */
     public function create()
     {
+        if (\Gate::denies('create', new Thread)) {
+            return redirect(route('threads'))
+                ->with('flash', [
+                    'message' => 'Your email address is not confirmed',
+                    'type' => 'warning',
+                ]);
+        }
+
         return view('threads.create');
     }
 
@@ -51,7 +64,6 @@ class ThreadController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request, [
             'title' => 'required|spamfree',
             'body' => 'required|spamfree',
@@ -68,7 +80,6 @@ class ThreadController extends Controller
         return redirect($thread->path())
             ->with('flash', [
                 'message' => 'Your deal has been posted!',
-                'type' => 'success'
             ]);
     }
 
@@ -76,10 +87,15 @@ class ThreadController extends Controller
      * Display the specified resource.
      * @param int $channelId
      * @param  \App\Thread  $thread
+     * @param  \App\Trending $trending
      * @return \Illuminate\Http\Response
      */
-    public function show(Channel $channel, Thread $thread)
+    public function show(Channel $channel, Thread $thread, Trending $trending)
     {
+        $trending->push($thread);
+
+        $thread->visits()->record();
+
         return view('threads.show', compact('thread'));
     }
 

@@ -6,12 +6,13 @@ use App\Utils\Votable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Utils\RecordActivity;
+use App\Utils\RecordVisit;
 use App\Notifications\ThreadUpdated;
 use App\Events\ReplyCreated;
 
 class Thread extends Model
 {
-    use RecordActivity;
+    use RecordActivity, RecordVisit;
 
     use Votable;
 
@@ -127,5 +128,10 @@ class Thread extends Model
         return $this->subscriptions()
             ->where('user_id', $userId ? : auth()->id())
             ->exists();
+    }
+
+    public function getVisitsCountAttribute()
+    {
+        return $this->visits()->count();
     }
 }

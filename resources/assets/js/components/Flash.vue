@@ -41,7 +41,7 @@
             // flash a card with message
             flash(data) {
                 this.body = data.message;
-                this.type = data.type;
+                this.type = data.type ? data.type : this.type;
                 this.show = true;
                 this.hide();
             },

@@ -12,7 +12,7 @@
                 <div class="card">
                     <div class="card-header">
                         <span>
-                            <img src="{{ $thread->owner->avatar_path }}" alt="" width="25" height="25" class="mr-2">
+                            <img src="{{ $thread->owner->avatar_path }}" alt="" width="24" height="24" class="user-avatar-sm mr-2">
                             <a class="card-link" href="/profiles/{{ $thread->owner->name }}">
                                 {{$thread->owner->name}}
                             </a> 
@@ -32,6 +32,9 @@
                     </div>
                     <div class="card-body">
                         {{$thread->body}}
+                    </div>
+                    <div class="card-footer">
+                        {{ $thread->visitsCount }} Visits
                     </div>
                 </div>
                 <br>

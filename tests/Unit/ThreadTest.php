@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Notification;
 use Faker\Factory as Faker;
 use App\Notifications\ThreadUpdated;
+use Illuminate\Support\Facades\Redis;
 
 class ThreadTest extends TestCase
 {
@@ -63,7 +64,7 @@ class ThreadTest extends TestCase
         Notification::fake();
 
         $this->signIn();
-        
+
         $this->thread
             ->subscribedBy()
             ->addReply([
@@ -113,6 +114,22 @@ class ThreadTest extends TestCase
         $this->thread->subscribedBy(auth()->id());
 
         $this->assertTrue($this->thread->isSubscribedBy);
+    }
+
+    /** @test */
+    public function it_records_each_visit()
+    {
+        $thread = make('App\Thread', ['id' => 1]);
+
+        $thread->visits()->reset();
+
+        $thread->visits()->record();
+
+        $this->assertEquals(1, $thread->visits()->count());
+
+        $thread->visits()->record();
+
+        $this->assertEquals(2, $thread->visits()->count());
     }
 
 }

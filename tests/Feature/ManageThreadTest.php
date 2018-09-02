@@ -29,7 +29,7 @@ class ManageThreadTest extends TestCase
         $thread = make('App\Thread'); // raw create an array and make create model
 
         $this->expectException('Illuminate\Auth\AuthenticationException');
-        $this->post('/threads', $thread->toArray());
+        $this->post(route('threads'), $thread->toArray());
     }
 
     /** @test */
@@ -39,12 +39,29 @@ class ManageThreadTest extends TestCase
 
         $thread = raw('App\Thread');
 
-        $response = $this->post('/threads', $thread);
+        $response = $this->post(route('threads'), $thread);
 
         $this->get($response->headers->get('Location'))
             ->assertSee($thread['title'])
             ->assertSee($thread['body']);
     }
+
+    /** @test */
+    public function a_user_must_confirm_their_email()
+    {
+        $user = factory('App\User')->states('unconfirmed')->create();
+
+        $this->signIn($user);
+
+        $thread = raw('App\Thread');
+
+        $this->get('/threads/create')
+            ->assertRedirect(route('threads'));
+
+        $this->post(route('threads'), $thread)
+            ->assertSessionHas('flash');
+    }
+
 
     /** @test */
     public function a_visitor_can_not_delete_threads()
@@ -138,6 +155,6 @@ class ManageThreadTest extends TestCase
 
         $thread = raw('App\Thread', $overrides);
 
-        return $this->post('/threads', $thread);
+        return $this->post(route('threads'), $thread);
     }
 }
