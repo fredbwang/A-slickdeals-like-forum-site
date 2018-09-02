@@ -45,6 +45,14 @@ class ThreadController extends Controller
      */
     public function create()
     {
+        if (\Gate::denies('create', new Thread)) {
+            return redirect(route('threads'))
+                ->with('flash', [
+                    'message' => 'Your email address is not confirmed',
+                    'type' => 'warning',
+                ]);
+        }
+
         return view('threads.create');
     }
 
@@ -56,7 +64,6 @@ class ThreadController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request, [
             'title' => 'required|spamfree',
             'body' => 'required|spamfree',
@@ -73,7 +80,6 @@ class ThreadController extends Controller
         return redirect($thread->path())
             ->with('flash', [
                 'message' => 'Your deal has been posted!',
-                'type' => 'success'
             ]);
     }
 

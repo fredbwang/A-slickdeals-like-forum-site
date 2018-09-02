@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'avatar_path'
+        'name', 'email', 'password', 'avatar_path',
     ];
 
     /**
@@ -32,6 +32,10 @@ class User extends Authenticatable
 
     protected $appends = [
         'visitsCount'
+    ];
+
+    protected $casts = [
+        'confirmed' => 'boolean'
     ];
 
     public function getRouteKeyName()
@@ -52,6 +56,15 @@ class User extends Authenticatable
     public function lastReply()
     {
         return $this->hasOne(Reply::class)->latest();
+    }
+
+    public function confirm()
+    {
+        $this->confirmed = true;
+        $this->confirmation_token = null;
+        $this->save();
+
+        return $this;
     }
 
     public function getAvatarPathAttribute($avatar_path)
