@@ -23,7 +23,7 @@ class ReplyTest extends TestCase
         $thread = create('App\Thread');
         $reply = create('App\Reply', ['thread_id' => $thread->id]);
 
-        $replyPath = "/threads/{$thread->channel->slug}/{$thread->id}#reply-{$reply->id}";
+        $replyPath = "/threads/{$thread->channel->slug}/{$thread->slug}#reply-{$reply->id}";
         $this->assertEquals($replyPath, $reply->path());
     }
 
