@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="signedIn">
-            <form @submit="submitReply">
+            <form @submit.prevent="submitReply">
                 <div class="form-group">
                     <label for="body">Reply:</label>
                     <textarea class="form-control" name="body" id="body" rows="10" v-model="body" required placeholder="Say something about the deal?"></textarea>
@@ -22,8 +22,6 @@
     import 'jquery.caret';
 
     export default {
-        props: ['endpoint'],
-
         data() {
             return {
                 body: "",
@@ -31,9 +29,6 @@
         },
 
         computed: {
-            signedIn() {
-                return window.App.signedIn;
-            }
         },
 
         mounted() {
@@ -54,7 +49,7 @@
 
         methods: {
             submitReply() {
-                axios.post(this.endpoint, {
+                axios.post(location.pathname + "/replies", {
                         body: this.body
                     })
                     .then((response) => {

@@ -58,4 +58,28 @@ class ReplyTest extends TestCase
         );
     }
 
+    /** @test */
+    public function it_knows_if_it_is_marked_as_best()
+    {
+        $reply = create('App\Reply');
+
+        $this->assertFalse($reply->isMarked());
+        
+        $reply->thread->update(['best_reply_id' => $reply->id]);
+        
+        $this->assertTrue($reply->isMarked('best'));
+    }
+
+    /** @test */
+    public function it_knows_if_it_is_marked_as_helpful()
+    {
+        $reply = create('App\Reply');
+
+        $this->assertFalse($reply->isMarked());
+        
+        $reply->update(['is_helpful' => true]);
+        
+        $this->assertTrue($reply->isMarked('helpful'));
+    }
+
 }

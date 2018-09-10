@@ -12,19 +12,23 @@ class Reply extends Model
 
     use Votable;
 
-    CONST MENTIONED_USER_NAME_PATTERN = '/(?<=^|(?<=[^a-zA-Z0-9-_\.]))@([A-Za-z]+[A-Za-z0-9-_]+)/';
+    const MENTIONED_USER_NAME_PATTERN = '/(?<=^|(?<=[^a-zA-Z0-9-_\.]))@([A-Za-z]+[A-Za-z0-9-_]+)/';
 
     protected $guarded = [];
 
     protected $with = ['owner', 'votes', 'thread'];
 
-    protected $appends = ['upVotesCount', 'downVotesCount', 'currentVote'];
+    protected $appends = ['upVotesCount', 'downVotesCount', 'currentVote', 'isBest'];
 
     public static function boot()
     {
         parent::boot();
 
         static::deleting(function ($reply) {
+            if ($reply->isMarked('best')) {
+                $reply->thread->update(['best_reply_id' => null]);
+            }
+
             $reply->votes->each->delete();
         });
     }
@@ -60,4 +64,23 @@ class Reply extends Model
     {
         $this->attributes['body'] = preg_replace(self::MENTIONED_USER_NAME_PATTERN, '<a href="/profiles/$1">$0</a>', $body);
     }
+
+    public function isMarked($tag = "best")
+    {
+        if ($tag == 'best') {
+            return $this->thread->best_reply_id == $this->id;
+        } else if ($tag == 'helpful') {
+            return !!$this->is_helpful;
+        }
+    }
+
+    public function getIsBestAttribute()
+    {
+        return $this->isMarked('best');
+    }
+
+    // public function getIsHelpfulAttribute()
+    // {
+    //     return $this->isMarked('helpful');
+    // }
 }

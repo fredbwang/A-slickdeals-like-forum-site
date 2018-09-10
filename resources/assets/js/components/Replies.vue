@@ -3,13 +3,13 @@
         <paginator :dataSet="dataSet" @pageChanged="fecth"></paginator>
 
         <div :key="reply.id" v-for="(reply, index) in replies">
-            <reply :data="reply" @deleted="remove(index)"></reply>
+            <reply :reply="reply" @deleted="remove(index)"></reply>
             <br>
         </div>
 
         <paginator :dataSet="dataSet" @pageChanged="fecth"></paginator>
 
-        <new-reply :endpoint="endpoint" @created="add"></new-reply>
+        <new-reply @created="add"></new-reply>
     </div>
 </template>
 
@@ -29,7 +29,6 @@
             return {
                 dataSet: false,
                 replies: [],
-                endpoint: location.pathname + "/replies"
             };
         },
 

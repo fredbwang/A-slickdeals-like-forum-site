@@ -20,6 +20,7 @@ class CreateThreadsTable extends Migration
             $table->integer('channel_id');
             $table->string('title');
             $table->text('body');
+            $table->integer('best_reply_id')->nullable();
             $table->timestamps();
         });
     }

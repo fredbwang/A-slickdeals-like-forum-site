@@ -29,9 +29,6 @@
             currentType() {
                 return this.currentVote > 0 ? 'vote-up' : this.currentVote < 0 ? 'vote-down' : 'no-vote';
             },
-            signedIn() {
-                return window.App.signedIn;
-            }
         },
         data() {
             return {
