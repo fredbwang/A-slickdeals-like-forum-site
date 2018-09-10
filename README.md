@@ -15,5 +15,6 @@ Right now
 6. supports posts subscription and user notification.
 7. supports user mentioning, user name auto completion.
 8. supports profile page avatar
+9. supports best reply selection
 
 ### More features are coming!
