@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Activity;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use App\Thread;
 
 class ManageThreadTest extends TestCase
 {
@@ -147,6 +148,36 @@ class ManageThreadTest extends TestCase
         $this->postThread(['channel_id' => 999])
             ->assertSessionHasErrors('channel_id');
 
+    }
+
+    /** @test */
+    public function a_thread_require_a_unique_slug()
+    {
+        $this->signIn();
+
+        $thread = create('App\Thread', ['title' => 'A title', 'slug' => 'a-title']);
+
+        $this->assertEquals($thread->fresh()->slug, 'a-title');
+
+        $this->post(route('threads'), $thread->toArray());
+
+        $this->assertTrue(Thread::where('slug', 'a-title-1')->exists());
+
+        $this->post(route('threads'), $thread->toArray());
+
+        $this->assertTrue(Thread::where('slug', 'a-title-2')->exists());
+    }
+
+    /** @test */
+    public function a_thread_with_a_tail_number_in_title_with_be_handled_properly()
+    {
+        $this->signIn();
+
+        $thread = create('App\Thread', ['title' => 'A title 10', 'slug' => 'a-title-10']);
+
+        $this->post(route('threads'), $thread->toArray());
+
+        $this->assertTrue(Thread::whereSlug('a-title-10-1')->exists());
     }
 
     public function postThread($overrides = [])

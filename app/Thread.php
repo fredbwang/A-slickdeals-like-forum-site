@@ -42,9 +42,14 @@ class Thread extends Model
         });
     }
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function path($suffix = null)
     {
-        return "/threads/{$this->channel->slug}/{$this->id}{$suffix}";
+        return "/threads/{$this->channel->slug}/{$this->slug}{$suffix}";
     }
 
     public function replies()
@@ -133,5 +138,30 @@ class Thread extends Model
     public function getVisitsCountAttribute()
     {
         return $this->visits()->count();
+    }
+
+    public function setSlugAttribute($value)
+    {
+        if (static::whereSlug($slug = str_slug($value))->exists()) {
+            $slug = $this->incrementSlug($slug);
+        }
+
+        $this->attributes['slug'] = $slug;
+    }
+
+    public function incrementSlug($slug, $count = 1)
+    {
+        $original = $slug;
+
+        while (static::whereSlug($slug)->exists()) {
+            $slug = "{$original}-" . $count++;
+        }
+
+        return $slug;
+    }
+
+    public function markBestReply(Reply $reply)
+    {
+        $this->update(['best_reply_id' => $reply->id]);
     }
 }

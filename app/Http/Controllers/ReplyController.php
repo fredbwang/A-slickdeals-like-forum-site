@@ -46,6 +46,7 @@ class ReplyController extends Controller
                 'user_id' => auth()->id()
             ]);
         } catch (Exception $e) {
+            dd($e);
             return response('Your comment is invalid!', 422);
         }
 

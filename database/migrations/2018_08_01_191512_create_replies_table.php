@@ -18,6 +18,8 @@ class CreateRepliesTable extends Migration
             $table->integer('thread_id');
             $table->integer('user_id');
             $table->text('body');
+            $table->boolean('is_helpful')->nullable();
+            $table->integer('mark_user_id')->nullable();
             $table->timestamps(); 
         });
     }

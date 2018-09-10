@@ -1,15 +1,15 @@
 <template>
-    <div :id="'reply-'+id" class="card">
+    <div :id="'reply-'+id" class="card" :class="isBest ? 'border-success' : ''">
         <div class="card-header">
             <span class="comment-meta">
-                <a class="card-link" :href="'/profiles/'+data.owner.name" v-text="data.owner.name">
+                <a class="card-link" :href="'/profiles/'+reply.owner.name" v-text="reply.owner.name">
                 </a>
                 said
                 <span v-text="ago"></span>
             </span>
-            <vote :reply="data"></vote>
+            <vote :reply="reply"></vote>
         </div>
-        <div class="card-body">
+        <div class="card-body" :class="isBest ? 'text-white bg-success' : ''">
             <div v-if="editting">
                 <form @submit="update">
                     <div class="form-group">
@@ -24,9 +24,14 @@
         </div>
 
 
-        <div class="card-footer" v-if="canUpdate">
-            <button class="btn btn-sm btn-danger float-right" @click="destroy">Delete</button>
-            <button class="btn btn-sm float-right mr-1" @click="editting=true">Edit</button>
+        <div class="card-footer" v-if="true">
+            <button v-if="authorize('canUpdate', reply.thread)" class="btn btn-sm float-left " @click="markBest">
+                Best Reply?
+            </button>
+            <div v-if="authorize('canUpdate', reply)">
+                <button class="btn btn-sm btn-danger float-right" @click="destroy">Delete</button>
+                <button class="btn btn-sm float-right mr-1" @click="editting=true">Edit</button>
+            </div>
         </div>
     </div>
 </template>
@@ -37,14 +42,11 @@
     import atwho from 'at.js';
 
     export default {
-        props: ["data"],
+        props: ["reply"],
 
         computed: {
-            canUpdate() {
-                return this.authorize((user) => this.data.user_id == user.id);
-            },
             ago() {
-                return moment(this.data.created_at).fromNow() + ":";
+                return moment(this.reply.created_at).fromNow() + ":";
             }
         },
 
@@ -55,14 +57,21 @@
         data() {
             return {
                 editting: false,
-                id: this.data.id,
-                body: this.data.body
+                id: this.reply.id,
+                body: this.reply.body,
+                isBest: this.reply.isBest,
             };
+        },
+
+        created() {
+            window.events.$on('best-reply-selected', (best_reply_id) => {
+                this.isBest = (best_reply_id == this.id);
+            });
         },
 
         methods: {
             update() {
-                axios.patch('/replies/' + this.data.id, {
+                axios.patch('/replies/' + this.id, {
                         body: this.body
                     })
                     .then((response) => {
@@ -74,16 +83,21 @@
                     });
             },
             destroy() {
-                axios.delete("/replies/" + this.data.id);
+                axios.delete("/replies/" + this.id);
 
-                this.$emit('deleted', this.data.id);
+                this.$emit('deleted', this.id);
                 // $(this.$el).fadeOut(500, () => {
                 //     flash('Comment deleted!');
                 // });
             },
             cancel() {
                 this.editting = false;
-                this.body = this.data.body;
+                this.body = this.reply.body;
+            },
+            markBest() {
+                axios.post('/replies/' + this.id + '/mark/best');
+
+                window.events.$emit('best-reply-selected', this.id);
             }
         }
     };

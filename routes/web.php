@@ -40,13 +40,13 @@ Route::get('/threads/{channel}/{thread}', 'ThreadController@show');
 Route::delete('/threads/{channel}/{thread}', 'ThreadController@destroy');
 
 Route::get('/threads/{channel}/{thread}/replies', 'ReplyController@index');
-Route::post('/threads/{channel}/{thread}/replies', 'ReplyController@store');
-Route::delete('/replies/{reply}', 'ReplyController@destroy');
+Route::post('/threads/{channel}/{thread}/replies', 'ReplyController@store')->name('reply.store');
+Route::delete('/replies/{reply}', 'ReplyController@destroy')->name('reply.destroy');
 Route::patch('/replies/{reply}', 'ReplyController@update');
 
-Route::post('/threads/{channel}/{thread}/subscribe', 'SubscriptionController@store');
-Route::delete('/threads/{channel}/{thread}/subscribe', 'SubscriptionController@destroy');
+Route::post('/replies/{reply}/mark/{action}', 'MarkedReplyController@store')->name('reply.mark');
 
+Route::post('/threads/{channel}/{thread}/subscribe', 'SubscriptionController@store');
 Route::delete('/threads/{channel}/{thread}/subscribe', 'SubscriptionController@destroy');
 
 Route::post('/replies/{reply}/vote/{action}', 'VoteController@store');

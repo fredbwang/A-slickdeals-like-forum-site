@@ -23,7 +23,7 @@ class ReplyTest extends TestCase
         $thread = create('App\Thread');
         $reply = create('App\Reply', ['thread_id' => $thread->id]);
 
-        $replyPath = "/threads/{$thread->channel->slug}/{$thread->id}#reply-{$reply->id}";
+        $replyPath = "/threads/{$thread->channel->slug}/{$thread->slug}#reply-{$reply->id}";
         $this->assertEquals($replyPath, $reply->path());
     }
 
@@ -56,6 +56,30 @@ class ReplyTest extends TestCase
             'some text, <a href="/profiles/user_1">@user_1</a>.',
             $reply->body
         );
+    }
+
+    /** @test */
+    public function it_knows_if_it_is_marked_as_best()
+    {
+        $reply = create('App\Reply');
+
+        $this->assertFalse($reply->isMarked());
+        
+        $reply->thread->update(['best_reply_id' => $reply->id]);
+        
+        $this->assertTrue($reply->isMarked('best'));
+    }
+
+    /** @test */
+    public function it_knows_if_it_is_marked_as_helpful()
+    {
+        $reply = create('App\Reply');
+
+        $this->assertFalse($reply->isMarked());
+        
+        $reply->update(['is_helpful' => true]);
+        
+        $this->assertTrue($reply->isMarked('helpful'));
     }
 
 }

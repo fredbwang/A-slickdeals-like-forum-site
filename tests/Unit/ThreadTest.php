@@ -26,10 +26,10 @@ class ThreadTest extends TestCase
     {
         $thread = create('App\Thread');
 
-        $this->assertEquals("/threads/{$thread->channel->slug}/{$thread->id}", $thread->path());
+        $this->assertEquals("/threads/{$thread->channel->slug}/{$thread->slug}", $thread->path());
 
         $suffix = Faker::create()->word;
-        $this->assertEquals("/threads/{$thread->channel->slug}/{$thread->id}{$suffix}", $thread->path($suffix));
+        $this->assertEquals("/threads/{$thread->channel->slug}/{$thread->slug}{$suffix}", $thread->path($suffix));
     }
 
 
@@ -132,7 +132,7 @@ class ThreadTest extends TestCase
 
 
     /** @test */
-    public function it_prevents_frequent_visits()
+    public function it_prevents_frequent_visits_recording()
     {
         $thread = make('App\Thread', ['id' => 1]);
 
