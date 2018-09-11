@@ -34,23 +34,20 @@ class ReplyController extends Controller
      */
     public function store($channelId, Thread $thread)
     {
-        if (Gate::denies('create', new Reply)) {
+        if ($thread->locked)
+            return response('Thread is locked', 423);
+
+        if (Gate::denies('create', new Reply))
             return response('You are commenting too frequently.', 429);
-        }
 
         try {
             request()->validate(['body' => 'required|spamfree']);
-
-            $reply = $thread->addReply([
-                'body' => request('body'),
-                'user_id' => auth()->id()
-            ]);
         } catch (Exception $e) {
-            dd($e);
             return response('Your comment is invalid!', 422);
         }
 
-        return $reply->load('owner');
+        return $thread->addReply(['body' => request('body'), 'user_id' => auth()->id()])
+            ->load('owner');
     }
 
     /**

@@ -9,7 +9,9 @@
 
         <paginator :dataSet="dataSet" @pageChanged="fecth"></paginator>
 
-        <new-reply @created="add"></new-reply>
+        <div v-if="$parent.locked"> <i class="fa fa-lock"></i> This thread is locked, you may not leave any more
+            comment.</div>
+        <new-reply v-else @created="add"></new-reply>
     </div>
 </template>
 

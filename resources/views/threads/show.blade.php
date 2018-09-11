@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<thread inline-template :initial-replies-count="{{ $thread->replies_count }} ">
+<thread inline-template :data-thread="{{ $thread }}">
     <div class="container">
         <div class="row">
             <div class="col-md-8">
@@ -50,9 +50,19 @@
                         <p class="card-text">
                             This deal was posted: {{ $thread->created_at->diffForHumans() }} by 
                             <a href="">{{ $thread->owner->name }}</a>, and currently has 
-                           <span v-text="repliesCount"></span> {{ str_plural('comment', $thread->replies_count) }}.
+                            <span v-text="repliesCount"></span> {{ str_plural('comment', $thread->replies_count) }}.
+                            <div v-cloak v-if="locked">
+                                <hr>
+                                <i class="fa fa-lock mr-1"></i>The thread is currently locked.
+                            </div>
                         </p>
-                        <subscribe-btn :initial-active="{{ json_encode($thread->isSubscribedBy) }}"></subscribe-btn>
+
+                        <subscribe-btn v-cloak v-if="signedIn" :initial-active="{{ json_encode($thread->isSubscribedBy) }}"></subscribe-btn>
+                        
+                        <span v-if="authorize('isAdmin')">
+                            <button v-cloak v-if="locked" @click="unlock" class="btn btn-default">Unlock</button>
+                            <button v-cloak v-else @click="lock" class="btn btn-default">Lock</button>
+                        </span>
                     </div>
                 </div>
             </div>

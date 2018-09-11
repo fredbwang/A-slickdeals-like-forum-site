@@ -36,7 +36,8 @@ Route::get('/threads', 'ThreadController@index')->name('threads');
 Route::post('/threads', 'ThreadController@store');
 Route::get('/threads/create', 'ThreadController@create');
 Route::get('/threads/{channel}', 'ThreadController@index');
-Route::get('/threads/{channel}/{thread}', 'ThreadController@show');
+Route::get('/threads/{channel}/{thread}', 'ThreadController@show')->name('thread.show');
+Route::post('/threads/{channel}/{thread}/lock', 'ThreadController@lock')->name('thread.lock')->middleware('admin');
 Route::delete('/threads/{channel}/{thread}', 'ThreadController@destroy');
 
 Route::get('/threads/{channel}/{thread}/replies', 'ReplyController@index');
