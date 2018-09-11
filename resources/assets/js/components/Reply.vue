@@ -11,7 +11,7 @@
         </div>
         <div class="card-body" :class="isBest ? 'text-white bg-success' : ''">
             <div v-if="editting">
-                <form @submit="update">
+                <form @submit.prevent="update">
                     <div class="form-group">
                         <textarea class="form-control" v-model="body" required></textarea>
                     </div>
@@ -24,8 +24,8 @@
         </div>
 
 
-        <div class="card-footer" v-if="true">
-            <button v-if="authorize('canUpdate', reply.thread)" class="btn btn-sm float-left " @click="markBest">
+        <div class="card-footer" v-if="authorize('canUpdate', reply.thread) || authorize('canUpdate', reply)">
+            <button v-if="authorize('canUpdate', reply.thread) && !isBest" class="btn btn-sm float-left " @click="markBest">
                 Best Reply?
             </button>
             <div v-if="authorize('canUpdate', reply)">

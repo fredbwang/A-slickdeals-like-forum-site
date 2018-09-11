@@ -11,5 +11,9 @@ module.exports = {
 
     canUpdate(object, reference = 'user_id') {
         return object[reference] == user.id;
+    },
+
+    isAdmin() {
+        return ['JohnDoe'].includes(user.name);
     }
 };

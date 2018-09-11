@@ -18,7 +18,7 @@ class MarkedReplyTest extends TestCase
 
         $this->assertFalse($replies[1]->fresh()->isMarked('best'));
 
-        $this->postJson(route('reply.mark', [$replies[1]->id]));
+        $this->postJson(route('reply.mark', [$replies[1]->id, 'best']));
 
         $this->assertTrue($replies[1]->fresh()->isMarked('best'));
     }
@@ -32,7 +32,7 @@ class MarkedReplyTest extends TestCase
 
         $this->signIn(create('App\User'));
 
-        $this->postJson(route('reply.mark', [$replies[1]->id]))->assertStatus(403);
+        $this->postJson(route('reply.mark', [$replies[1]->id, 'best']))->assertStatus(403);
 
         $this->assertFalse($replies[1]->fresh()->isMarked('best'));
     }
@@ -50,5 +50,5 @@ class MarkedReplyTest extends TestCase
 
         $this->assertNull($reply->thread->fresh()->best_reply_id);
     }
-    
+
 }

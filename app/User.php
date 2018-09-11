@@ -67,6 +67,13 @@ class User extends Authenticatable
         return $this;
     }
 
+    public function isAdmin()
+    {
+        return Role::where('user_id', $this->id)
+            ->where('name', 'admin')
+            ->exists();
+    }
+
     public function getAvatarPathAttribute($avatar_path)
     {
         if (!$avatar_path) {

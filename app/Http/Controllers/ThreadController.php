@@ -118,18 +118,19 @@ class ThreadController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \App\Channel $channel
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Thread $thread)
+    public function update(Channel $channel, Thread $thread)
     {
-        //
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param \App\Channel $channel
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
@@ -139,6 +140,25 @@ class ThreadController extends Controller
 
         $thread->delete();
         return redirect('/threads');
+    }
+
+
+    /**
+     * Perform lock operations on threads
+     *
+     * @param $channel
+     * @param  \App\Thread  $thread
+     * @return \Illuminate\Http\Response
+     */
+    public function lock($channel, Thread $thread)
+    {
+        if (request()->has('lock')) {
+            if (request('lock') == true) {
+                $thread->lock();
+            } else {
+                $thread->unlock();
+            }
+        }
     }
 
     public function getThreads(Channel $channel, ThreadFilter $filter)
