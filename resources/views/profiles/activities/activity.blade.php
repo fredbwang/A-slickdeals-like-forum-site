@@ -3,7 +3,7 @@
         {{ $heading }}
     </div>
     <div class="card-body">
-        {{ $body }}
+        {!! html_entity_decode($body) !!}
     </div>
 </div>
 <br>
