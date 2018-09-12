@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use \Exception;
 use App\Thread;
+use App\Rules\Recaptcha;
 use App\Channel;
+use App\Trending;
 use App\Filters\ThreadFilter;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Console\Presets\React;
-use App\Trending;
 
 class ThreadController extends Controller
 {
@@ -62,12 +63,13 @@ class ThreadController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Recaptcha $recaptcha)
     {
         $this->validate($request, [
             'title' => 'required|spamfree',
             'body' => 'required|spamfree',
-            'channel_id' => 'required|exists:channels,id'
+            'channel_id' => 'required|exists:channels,id',
+            'g-recaptcha-response' => ['required', $recaptcha],
         ]);
 
         $thread = Thread::create([

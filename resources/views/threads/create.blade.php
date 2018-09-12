@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
+@section('head')
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+@endsection
+
 @section('content')
+{{ $errors }}
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -37,6 +42,14 @@
                             </textarea>
                             @include('threads.form-feedback', ['object' => 'body'])
                         </div>
+
+                        <div class="form-group">
+                            <div class="g-recaptcha" data-sitekey="6Leow28UAAAAAFIlgCQyldMJD4poQGmWGUH0kZxa"></div>
+                            @if ($errors->has('g-recaptcha-response')) 
+                                <p><small class="text-danger">{{ $errors->first('g-recaptcha-response') }}</small></p>
+                            @endif
+                        </div>
+                        
                         <button class="form-group btn btn-default">Post</button>
                     </form>
                 </div>
