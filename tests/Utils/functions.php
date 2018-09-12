@@ -12,5 +12,9 @@ function make($class, $attributes = [], $times = null)
 
 function raw($class, $attributes = [], $times = null)
 {
+    if ($class == 'App\Thread') {
+        return factory($class, $times)->raw($attributes) + ['g-recaptcha-response' => 'token'];
+    }
+
     return factory($class, $times)->raw($attributes);
 }

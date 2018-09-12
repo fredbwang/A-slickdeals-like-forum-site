@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Activity;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Thread;
+use App\Rules\Recaptcha;
 
 class ManageThreadTest extends TestCase
 {
@@ -14,7 +15,12 @@ class ManageThreadTest extends TestCase
     public function setUp()
     {
         parent::setup();
-        // $this->thread = create('App\Thread');
+
+        app()->singleton(Recaptcha::class, function () {
+            return \Mockery::mock(Recaptcha::class, function ($m) {
+                $m->shouldReceive('passes')->andReturn(true);
+            });
+        });
     }
 
     /** @test */
@@ -27,10 +33,10 @@ class ManageThreadTest extends TestCase
     /** @test */
     public function a_visitor_can_not_create_a_thread()
     {
-        $thread = make('App\Thread'); // raw create an array and make create model
+        $thread = raw('App\Thread'); // raw create an array and make create model
 
         $this->expectException('Illuminate\Auth\AuthenticationException');
-        $this->post(route('threads'), $thread->toArray());
+        $this->post(route('threads'), $thread);
     }
 
     /** @test */
@@ -142,6 +148,7 @@ class ManageThreadTest extends TestCase
     public function a_thread_requires_a_valid_channel()
     {
         factory('App\Channel', 3)->create();
+
         $this->postThread(['channel_id' => null])
             ->assertSessionHasErrors('channel_id');
 
@@ -151,7 +158,7 @@ class ManageThreadTest extends TestCase
     }
 
     /** @test */
-    public function a_thread_require_a_unique_slug()
+    public function a_thread_requires_a_unique_slug()
     {
         $this->signIn();
 
@@ -159,14 +166,24 @@ class ManageThreadTest extends TestCase
 
         $this->assertEquals($thread->fresh()->slug, 'a-title');
 
-        $this->post(route('threads'), $thread->toArray());
+        $this->post(route('threads'), $thread->toArray() + ['g-recaptcha-response' => 'token']);
 
         $this->assertTrue(Thread::where('slug', 'a-title-1')->exists());
 
-        $this->post(route('threads'), $thread->toArray());
+        $this->post(route('threads'), $thread->toArray() + ['g-recaptcha-response' => 'token']);
 
         $this->assertTrue(Thread::where('slug', 'a-title-2')->exists());
     }
+
+    /** @test */
+    public function a_thread_requires_recaptcha_validation()
+    {
+        unset(app()[Recaptcha::class]);
+
+        $this->postThread(['g-recaptcha-response' => 'test'])
+            ->assertSessionHasErrors('g-recaptcha-response');
+    }
+
 
     /** @test */
     public function a_thread_with_a_tail_number_in_title_with_be_handled_properly()
@@ -175,7 +192,7 @@ class ManageThreadTest extends TestCase
 
         $thread = create('App\Thread', ['title' => 'A title 10', 'slug' => 'a-title-10']);
 
-        $this->post(route('threads'), $thread->toArray());
+        $this->post(route('threads'), $thread->toArray() + ['g-recaptcha-response' => 'token']);
 
         $this->assertTrue(Thread::whereSlug('a-title-10-1')->exists());
     }
