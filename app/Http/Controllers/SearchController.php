@@ -53,9 +53,8 @@ class SearchController extends Controller
             return $threads;
         }
 
-        return view('threads.index', [
+        return view('threads.search', [
             'threads' => $threads,
-            'channel' => null,
             'trending' => $thrending->get(),
         ]);
     }

@@ -187,4 +187,9 @@ class Thread extends Model
     {
         $this->update(['locked' => false]);
     }
+
+    public function toSearchableArray()
+    {
+        return $this->toArray() + ['path' => $this->path()];
+    }
 }
