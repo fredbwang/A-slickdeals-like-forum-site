@@ -16,5 +16,6 @@ Right now
 7. supports user mentioning, user name auto completion.
 8. supports profile page avatar
 9. supports best reply selection
+10. supports search function
 
 ### More features are coming!
