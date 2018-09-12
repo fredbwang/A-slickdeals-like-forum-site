@@ -3,11 +3,9 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class MentionUserTest extends TestCase
 {
-    use DatabaseMigrations;
     /** @test */
     public function mentioned_user_in_a_reply_is_notified()
     {

@@ -4,13 +4,10 @@ namespace Tests\Feature;
 
 use Storage;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\UploadedFile;
 
 class CreateAvatarTest extends TestCase
 {
-    use DatabaseMigrations;
-
     /** @test */
     public function user_can_upload_avatar()
     {

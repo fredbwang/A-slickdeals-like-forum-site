@@ -3,12 +3,9 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class VoteTest extends TestCase
 {
-    use DatabaseMigrations;
-
     /** @test */
     public function a_visitor_can_not_vote()
     {
@@ -26,7 +23,7 @@ class VoteTest extends TestCase
         $reply = create('App\Reply');
         $this->post($reply->votePath());
 
-        $this->assertCount(1, $reply->votes);
+        $this->assertCount(1, $reply->fresh()->votes);
     }
 
     /** @test */
@@ -42,7 +39,7 @@ class VoteTest extends TestCase
             $this->fail('A user can not vote a reply more than once.');
         }
 
-        $this->assertCount(1, $reply->votes);
+        $this->assertCount(1, $reply->fresh()->votes);
     }
 
     /** @test */

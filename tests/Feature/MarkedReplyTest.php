@@ -3,12 +3,9 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class MarkedReplyTest extends TestCase
 {
-    use DatabaseMigrations;
-
     /** @test */
     public function user_can_mark_repl_with_a_tag()
     {

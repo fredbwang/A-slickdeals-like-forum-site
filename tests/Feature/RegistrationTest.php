@@ -3,15 +3,12 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ConfirmYourEmail;
 use App\User;
 
 class RegistrationTest extends TestCase
 {
-    use DatabaseMigrations;
-
     /** @test */
     public function a_confirmation_email_is_sent_upon_registration()
     {

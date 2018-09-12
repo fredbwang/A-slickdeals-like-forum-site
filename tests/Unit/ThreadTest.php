@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Notification;
 use Faker\Factory as Faker;
 use App\Notifications\ThreadUpdated;
@@ -11,8 +10,6 @@ use Illuminate\Support\Facades\Redis;
 
 class ThreadTest extends TestCase
 {
-    use DatabaseMigrations;
-
     protected $thread;
 
     public function setUp()

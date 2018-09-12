@@ -5,14 +5,9 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use \Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UserNotificationTest extends TestCase
 {
-
-    use DatabaseMigrations;
-
     public function setUp()
     {
         parent::setUp();

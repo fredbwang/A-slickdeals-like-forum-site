@@ -3,12 +3,9 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class LockThreadTest extends TestCase
 {
-    use DatabaseMigrations;
-
     /** @test */
     public function non_admin_can_not_lock_a_thread()
     {

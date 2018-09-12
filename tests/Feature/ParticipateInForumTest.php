@@ -4,12 +4,9 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Exception;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ParticipateInForumTest extends TestCase
 {
-    use DatabaseMigrations;
-
     /** @test */
     function a_visitor_can_not_participate_in_forum_threads()
     {
