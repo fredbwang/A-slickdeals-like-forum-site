@@ -13,7 +13,7 @@
             <div v-if="editting">
                 <form @submit.prevent="update">
                     <div class="form-group">
-                        <textarea class="form-control" v-model="body" required></textarea>
+                        <textarea class="form-control" v-model="renderedBody" required></textarea>
                     </div>
                     <button class="btn btn-sm btn-primary float-right" type="submit">Submit</button>
                     <button class="btn btn-sm b tn-light float-right mr-1" @click="cancel" type="button">Cancel</button>
@@ -47,6 +47,12 @@
         computed: {
             ago() {
                 return moment(this.reply.created_at).fromNow() + ":";
+            },
+
+            renderedBody() {
+                let pattern = new RegExp('<\s*a[^>]*>(.*?)<\s*/\s*a>');
+
+                return this.body.replace(pattern, '$1');
             }
         },
 

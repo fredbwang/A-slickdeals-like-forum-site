@@ -12,7 +12,7 @@ class Reply extends Model
 
     use Votable;
 
-    const MENTIONED_USER_NAME_PATTERN = '/(?<=^|(?<=[^a-zA-Z0-9-_\.]))@([A-Za-z]+[A-Za-z0-9-_]+)/';
+    const MENTIONED_USER_NAME_PATTERN = '/(?<=^|(?<=[^a-zA-Z0-9-_\.]))@([A-Za-z\.\_]+[A-Za-z0-9\-\_]+)/';
 
     protected $guarded = [];
 
