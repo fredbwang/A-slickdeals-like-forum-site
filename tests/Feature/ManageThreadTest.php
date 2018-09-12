@@ -4,14 +4,11 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Activity;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Thread;
 use App\Rules\Recaptcha;
 
 class ManageThreadTest extends TestCase
 {
-    use DatabaseMigrations;
-
     public function setUp()
     {
         parent::setup();

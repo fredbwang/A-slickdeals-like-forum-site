@@ -4,12 +4,9 @@ namespace Tests\Unit;
 
 use App\Activity;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ActivityTest extends TestCase
 {
-    use DatabaseMigrations;
-
     /** @test */
     public function it_record_activity_when_thread_is_created()
     {

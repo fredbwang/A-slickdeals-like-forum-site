@@ -4,13 +4,9 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class SubscribeTest extends TestCase
 {
-    use DatabaseMigrations;
-
     /** @test */
     public function a_user_can_subscribe_to_a_thread()
     {

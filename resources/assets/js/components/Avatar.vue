@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row">
-            <img :src="avatar_path" alt="No Avatar" width="100" height="100" class="mr-3">
+            <img :src="avatar_path" alt="No Avatar" width="100" height="100" class="user-avatar mr-3">
 
             <h3 class="mt-2">
                 {{ this.user.name }}
@@ -78,7 +78,7 @@
 </script>
 
 <style>
-    img {
+    img.user-avatar {
         border-radius: 50px;
         border: double 1px black;
     }

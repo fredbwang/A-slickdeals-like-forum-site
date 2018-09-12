@@ -32,6 +32,14 @@ img.user-avatar-sm {
     border: double 1px black;
 }
 
+.ais-highlight > em {
+    font-weight: bolder,
+}
+
+.card {
+    margin-bottom: 15px;
+}
+
 [v-cloak] {
     display: none;
 }
