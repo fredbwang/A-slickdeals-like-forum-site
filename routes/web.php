@@ -35,6 +35,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/threads', 'ThreadController@index')->name('threads');
 Route::post('/threads', 'ThreadController@store');
 Route::get('/threads/create', 'ThreadController@create');
+Route::get('/threads/search', 'SearchController@show');
 Route::get('/threads/{channel}', 'ThreadController@index');
 Route::get('/threads/{channel}/{thread}', 'ThreadController@show')->name('thread.show');
 Route::post('/threads/{channel}/{thread}/lock', 'ThreadController@lock')->name('thread.lock')->middleware('admin');

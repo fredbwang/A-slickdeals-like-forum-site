@@ -47,6 +47,22 @@
         </div>
 
         <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-header text-light bg-secondary">
+                    <i class="fa fa-search"></i>
+                    Search
+                </div>
+                <div class="card-body bg-default">
+                    <form action="/threads/search" method="GET">
+                        <div class="input-group">
+                            <input id="search-bar" class="form-control" type="text" placeholder="Search the site" name="keyword">
+                            <div class="input-group-append">
+                                <button class="input-group-text" id="search-bar">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div class="card">
                 <div class="card-header text-light bg-secondary">
                     <i class="fa fa-fire"></i>

@@ -3,18 +3,19 @@
 namespace App;
 
 use App\Utils\Votable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Utils\RecordActivity;
 use App\Utils\RecordVisit;
 use App\Notifications\ThreadUpdated;
 use App\Events\ReplyCreated;
+use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Thread extends Model
 {
     use RecordActivity, RecordVisit;
 
-    use Votable;
+    use Votable, Searchable;
 
     protected $guarded = [];
 
