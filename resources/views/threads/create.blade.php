@@ -2,6 +2,11 @@
 
 @section('head')
     <script src='https://www.google.com/recaptcha/api.js'></script>
+    {{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.js"></script> --}}
+@endsection
+
+@section('styles')
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.css">
 @endsection
 
 @section('content')
@@ -36,10 +41,13 @@
                         </div>
                         <div class="form-group">
                             <label for="body">Body:</label>
-                            <textarea class="form-control {{ $errors->has('body') ? 'is-invalid' : (count($errors) ? 'is-valid' : '') }}"
+
+                            <forum-editor name="body"></forum-editor>
+
+                            {{-- <textarea class="form-control {{ $errors->has('body') ? 'is-invalid' : (count($errors) ? 'is-valid' : '') }}"
                                     name="body" id="body" rows="10" required> {{ old('body') }}
-                            </textarea>
-                            @include('threads.form-feedback', ['object' => 'body'])
+                            </textarea> --}}
+                            {{-- @include('threads.form-feedback', ['object' => 'body']) --}}
                         </div>
 
                         <div class="form-group">
