@@ -14,7 +14,7 @@ let authorizations = require('./authorizations');
 
 Vue.prototype.authorize = (...params) => {
 
-    if (! window.App.signedIn) {
+    if (!window.App.signedIn) {
         return false;
     }
 
@@ -35,6 +35,7 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 // simple components
+Vue.component('forum-editor', require('./components/ForumEditor.vue'));
 Vue.component('flash', require('./components/Flash.vue'));
 Vue.component('paginator', require('./components/Paginator.vue'));
 Vue.component('user-notifications', require('./components/UserNotifications.vue'));

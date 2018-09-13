@@ -1,5 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/css/vendor/jquery.atwho.css": "/css/vendor/jquery.atwho.css"
+    "/css/vendor/jquery.atwho.css": "/css/vendor/jquery.atwho.css",
+    "/css/vendor/trix.css": "/css/vendor/trix.css",
+    "/js/vendor/trix.js": "/js/vendor/trix.js"
 }
