@@ -21,7 +21,7 @@ class Thread extends Model
 
     protected $with = ['owner', 'votes', 'channel'];
 
-    protected $appends = ['isSubscribedBy'];
+    protected $appends = ['isSubscribedBy', 'path'];
 
     protected $casts = ['locked' => 'boolean'];
 
@@ -136,6 +136,11 @@ class Thread extends Model
         return $this->subscriptions()
             ->where('user_id', $userId ? : auth()->id())
             ->exists();
+    }
+
+    public function getPathAttribute()
+    {
+        return $this->path();
     }
 
     public function getVisitsCountAttribute()

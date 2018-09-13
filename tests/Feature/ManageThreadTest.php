@@ -95,6 +95,22 @@ class ManageThreadTest extends TestCase
     }
 
     /** @test */
+    public function a_user_can_update_threads()
+    {
+        $this->signIn();
+
+        $thread = create('App\Thread', ['user_id' => auth()->id()]);
+
+        $this->patchJson($thread->path(), [
+            'title' => 'new title',
+            'body' => 'new body',
+        ]);
+
+        $this->assertEquals($thread->fresh()->title, 'new title');
+        $this->assertEquals($thread->fresh()->body, 'new body');
+    }
+
+    /** @test */
     public function a_user_can_only_delete_its_own_thread()
     {
         $this->withExceptionHandling()->signIn();
@@ -111,6 +127,21 @@ class ManageThreadTest extends TestCase
     }
 
     /** @test */
+    public function a_user_can_only_update_its_own_threads()
+    {
+        $this->withExceptionHandling()->signIn();
+
+        $thread = create('App\Thread');
+
+        $this->patchJson($thread->path(), [])->assertStatus(403);
+
+        $dbThread = Thread::get($thread->id)->first();
+        
+        $this->assertEquals($dbThread->title, $thread->title);
+        $this->assertEquals($dbThread->body, $thread->body);
+    }
+
+    /** @test */
     public function a_user_can_only_see_delete_btn_when_authorized()
     {
         $this->signIn();
@@ -124,22 +155,30 @@ class ManageThreadTest extends TestCase
         $this->get($thread->path())->assertDontSee('id="delete-btn"');
     }
 
-
     /** @test */
-    public function a_thread_requires_a_title()
-    {
-        $this->postThread(['title' => null])
-            ->assertSessionHasErrors('title');
-
-    }
-
-    /** @test */
-    public function a_thread_requires_a_body()
+    public function a_thread_requires_title_and_body_when_creating()
     {
         $this->postThread(['body' => null])
             ->assertSessionHasErrors('body');
 
+        $this->postThread(['body' => null])
+            ->assertSessionHasErrors('body');
     }
+
+    /** @test */
+    public function a_thread_requires_body_and_title_when_updating()
+    {
+        $this->signIn()->withExceptionHandling();
+
+        $thread = create('App\Thread', ['user_id' => auth()->id()]);
+
+        $this->patch($thread->path(), ['title' => 'new title'])
+            ->assertSessionHasErrors('body');
+
+        $this->patch($thread->path(), ['body' => 'new title'])
+            ->assertSessionHasErrors('title');
+    }
+
 
     /** @test */
     public function a_thread_requires_a_valid_channel()

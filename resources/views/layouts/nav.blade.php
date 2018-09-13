@@ -4,7 +4,7 @@
             @if (config('app.name') == 'Laravel')
                 Laravel
             @else 
-                <img style="height:50px" x-enc="src" src="https://static.slickdealscdn.com/images/header/slickdealsLogo.png?6447">
+                <img style="height:50px" x-enc="src" src="http://static.slickdealscdn.com/images/header/slickdealsLogo.png?6447">
             @endif
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

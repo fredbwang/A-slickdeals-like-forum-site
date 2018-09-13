@@ -40,6 +40,7 @@ Route::get('/threads/{channel}', 'ThreadController@index');
 Route::get('/threads/{channel}/{thread}', 'ThreadController@show')->name('thread.show');
 Route::post('/threads/{channel}/{thread}/lock', 'ThreadController@lock')->name('thread.lock')->middleware('admin');
 Route::delete('/threads/{channel}/{thread}', 'ThreadController@destroy');
+Route::patch('/threads/{channel}/{thread}', 'ThreadController@update')->name('thread.update');
 
 Route::get('/threads/{channel}/{thread}/replies', 'ReplyController@index');
 Route::post('/threads/{channel}/{thread}/replies', 'ReplyController@store')->name('reply.store');
