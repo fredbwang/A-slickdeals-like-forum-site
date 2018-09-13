@@ -13,7 +13,7 @@
             <div v-if="editting">
                 <form @submit.prevent="update">
                     <div class="form-group">
-                        <textarea class="form-control" v-model="renderedBody" required></textarea>
+                        <textarea class="form-control" v-model="body" required></textarea>
                     </div>
                     <button class="btn btn-sm btn-primary float-right" type="submit">Submit</button>
                     <button class="btn btn-sm b tn-light float-right mr-1" @click="cancel" type="button">Cancel</button>
@@ -48,12 +48,6 @@
             ago() {
                 return moment(this.reply.created_at).fromNow() + ":";
             },
-
-            renderedBody() {
-                let pattern = new RegExp('<\s*a[^>]*>(.*?)<\s*/\s*a>');
-
-                return this.body.replace(pattern, '$1');
-            }
         },
 
         components: {
@@ -70,8 +64,26 @@
         },
 
         created() {
+            this.renderBody();
+
             window.events.$on('best-reply-selected', (best_reply_id) => {
                 this.isBest = (best_reply_id == this.id);
+            });
+        },
+
+        mounted() {
+            $('.card-body form textarea').atwho({
+                at: '@',
+                delay: 500,
+                callbacks: {
+                    remoteFilter: function (query, callback) {
+                        $.getJSON("/api/users",
+                            {name: query},
+                            function (usernames) {
+                                callback(usernames);
+                            });
+                    }
+                }
             });
         },
 
@@ -104,6 +116,11 @@
                 axios.post('/replies/' + this.id + '/mark/best');
 
                 window.events.$emit('best-reply-selected', this.id);
+            },
+            renderBody() {
+                let pattern = new RegExp('<\s*a[^>]*>(.*?)<\s*/\s*a>');
+
+                this.body = this.body.replace(pattern, '$1');
             }
         }
     };
