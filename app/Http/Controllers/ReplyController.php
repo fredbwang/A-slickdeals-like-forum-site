@@ -85,6 +85,9 @@ class ReplyController extends Controller
             return response('Your comment is invalid!', 422);
         }
 
-        $reply->update(['body' => request('body')]);
+        $reply->body = request('body');
+        $reply->save();
+
+        return $reply->body;
     }
 }

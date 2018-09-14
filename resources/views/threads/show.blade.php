@@ -2,6 +2,7 @@
 
 @section('styles')
     <link rel="stylesheet" href="/css/vendor/jquery.atwho.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.css">
 @endsection
 
 @section('content')
@@ -10,7 +11,7 @@
         <div class="row">
             <div class="col-md-8">
                 
-                @include('threads.content')
+                @include('threads._content')
 
                 <br>
 
