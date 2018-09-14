@@ -10,17 +10,17 @@
             <vote :reply="reply"></vote>
         </div>
         <div class="card-body" :class="isBest ? 'text-white bg-success' : ''">
-            <div v-if="editting">
+            <div v-show="editting">
                 <form @submit.prevent="update">
                     <div class="form-group">
-                        <textarea class="form-control" v-model="body" required></textarea>
+                        <textarea class="form-control" v-model="bodyText" required></textarea>
                     </div>
                     <button class="btn btn-sm btn-primary float-right" type="submit">Submit</button>
                     <button class="btn btn-sm b tn-light float-right mr-1" @click="cancel" type="button">Cancel</button>
                 </form>
             </div>
 
-            <div v-else v-html="body"></div>
+            <div v-show="!editting" v-html="body"></div>
         </div>
 
 
@@ -30,7 +30,7 @@
             </button>
             <div v-if="authorize('canUpdate', reply)">
                 <button class="btn btn-sm btn-danger float-right" @click="destroy">Delete</button>
-                <button class="btn btn-sm float-right mr-1" @click="editting=true">Edit</button>
+                <button class="btn btn-sm float-right mr-1" @click="edit">Edit</button>
             </div>
         </div>
     </div>
@@ -59,16 +59,9 @@
                 editting: false,
                 id: this.reply.id,
                 body: this.reply.body,
+                bodyText: "",
                 isBest: this.reply.isBest,
             };
-        },
-
-        created() {
-            this.renderBody();
-
-            window.events.$on('best-reply-selected', (best_reply_id) => {
-                this.isBest = (best_reply_id == this.id);
-            });
         },
 
         mounted() {
@@ -77,8 +70,9 @@
                 delay: 500,
                 callbacks: {
                     remoteFilter: function (query, callback) {
-                        $.getJSON("/api/users",
-                            {name: query},
+                        $.getJSON("/api/users", {
+                                name: query
+                            },
                             function (usernames) {
                                 callback(usernames);
                             });
@@ -87,19 +81,27 @@
             });
         },
 
+        created() {
+            window.events.$on('best-reply-selected', (best_reply_id) => {
+                this.isBest = (best_reply_id == this.id);
+            });
+        },
+
         methods: {
             update() {
                 axios.patch('/replies/' + this.id, {
-                        body: this.body
+                        body: this.bodyText
                     })
                     .then((response) => {
                         this.editting = false;
+                        this.body = response.data;
                         flash('Updated!');
                     })
                     .catch((error) => {
                         flash(error.response.data, 'danger');
                     });
             },
+
             destroy() {
                 axios.delete("/replies/" + this.id);
 
@@ -108,20 +110,27 @@
                 //     flash('Comment deleted!');
                 // });
             },
+
+            edit() {
+                this.editting = true;
+                this.bodyText = this.unwrapBody();
+            },
+
             cancel() {
                 this.editting = false;
-                this.body = this.reply.body;
             },
+
             markBest() {
                 axios.post('/replies/' + this.id + '/mark/best');
 
                 window.events.$emit('best-reply-selected', this.id);
             },
-            renderBody() {
+
+            unwrapBody() {
                 let pattern = new RegExp('<\s*a[^>]*>(.*?)<\s*/\s*a>');
 
-                this.body = this.body.replace(pattern, '$1');
-            }
+                return this.body.replace(pattern, '$1');
+            },
         }
     };
 </script>

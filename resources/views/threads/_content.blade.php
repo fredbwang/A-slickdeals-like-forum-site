@@ -3,7 +3,8 @@
         <input class="form-control" type="text" v-model="title">
     </div>
     <div class="card-body">
-        <textarea class="form-control" name="" id="" rows="10" v-model="body"></textarea>
+        <forum-editor v-model="body" name="body" :value="body"></forum-editor>
+        {{-- <textarea class="form-control" name="" id="" rows="10" v-model="body"></textarea> --}}
     </div>
     <div class="card-footer">
         @can('delete', $thread)
